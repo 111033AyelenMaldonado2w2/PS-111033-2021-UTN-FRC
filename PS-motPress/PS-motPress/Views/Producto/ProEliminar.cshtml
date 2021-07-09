@@ -1,0 +1,101 @@
+﻿@model PS_motPress.Models.Producto.ClsProducto
+@{
+    /**/
+
+    ViewBag.Title = "ProEliminar";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+    p{
+        margin-bottom: 5px;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Eliminar Producto - @Model.pNombre</strong></h2><hr />
+                        <input hidden value="@Model.idProducto" name="idProducto" id="idProducto" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10" style="text-align:center">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="data:image;base64,@System.Convert.ToBase64String(Model.pImage)" width="250" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <div class="card">
+                            <div class="card-footer">
+                                <h4><u>Información</u></h4>
+                            </div>
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p><strong>Marca: </strong>@Model.pMarca</p>
+                                        <p><strong>Categoría: </strong>@Model.pTipo</p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p><strong>Nombre: </strong>@Model.pNombre</p>
+                                        <p><strong>Precio: </strong>$ @Model.pPrecio <label style="font-size:9px">ARS</label></p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p><strong>Modelo: </strong>@Model.pModelo</p>
+                                        <p><strong>Color: </strong>@Model.pColor</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p><strong>Motor: </strong>@Model.pMotor</p>
+                                        <p><strong>Cilindrada: </strong>@Model.pCilindrada</p>
+                                        <p><strong>Kilometraje: </strong>@Model.pKilometros</p>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p><strong>Arranque: </strong>@Model.pArranque</p>
+                                        <p><strong>Combustible: </strong>@Model.pCombustible</p>
+                                        <p><strong>Caja: </strong>@Model.pCaja</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>  
+                <br /><br />
+                <div class="row">
+                    <div class="col-lg-12" style="text-align: center">
+                        <button class="btn btn-dark btnNegro " id="btnCancel" type="button" style="display:inline" onclick="prueba();">Cancelar</button>
+                        <button type="button" id="btnBorrar" style="display:inline" class="btn btn-danger">Eliminar</button>
+                        <button class="btn btn-danger" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/Producto/ProEliminar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ }
+

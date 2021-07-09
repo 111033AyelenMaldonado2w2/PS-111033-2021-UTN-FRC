@@ -1,0 +1,9 @@
+﻿.modal.fade:not(.in).right .modal-dialog {
+    -webkit-transform: translate3d(120%, 0, 0);
+    transform: translate3d(120%, 0, 0);
+    top:50px;   
+}
+
+#myModal .modal-content {
+    max-width: 300px;
+}

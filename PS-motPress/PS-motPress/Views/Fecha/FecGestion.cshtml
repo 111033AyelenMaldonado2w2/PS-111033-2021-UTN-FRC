@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "FecGestion";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+    else
+    {
+        if (Session["rol"].Equals("Empleado"))
+        {
+            Response.Redirect("/Home/Index");
+        }
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2>
+                            <strong>
+                                Administración de Fechas
+                            </strong>
+                        </h2><hr />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="card">
+                    <div class="card-header">
+                        <label>Gestión del Calendario</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-inline">
+                                    <p>Ultima fecha del calendario: </p>
+                                    <p id="rtaUltimaFecha" style="margin-left:10px;"></p>
+                                    <input id="utlFecha" hidden />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-inline">
+                                    <p>Primera fecha del calendario: </p>
+                                    <p id="rtaPrimeraFecha" style="margin-left:10px;"></p>
+                                    <input id="primFecha" hidden />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align: center">
+                                <button class="btn btn-warning btnNaranja" type="button" id="btnGenerarAnio" style="width:180px; margin-right:10px;">Generar Nuevo Año</button>
+                                <button class="btn btn-warning btnNaranja" type="button" id="btnVtoCambio" style="width:180px;">Actualizar vto Cuotas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="card">
+                    <div class="card-header">
+                        <label>Gestión de las Fechas</label>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-inline">
+                            <label style="margin-right: 10px;">Seleccionar fecha a modificar</label>
+                            <input type="date" id="dtpFecha" class="form-control" />
+                            <button type="button" class="btn btn-warning btnNaranjaClaro" id="buscarFecha" style="margin-left:10px">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Fecha</span>
+                                    <input class="form-control" id="txtFecha" disabled />
+                                    <input id="txtId" hidden />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Primer día mes</span>
+                                    <input class="form-control" id="txtInicioMes" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Ultimo día mes</span>
+                                    <input class="form-control" id="txtFinMes" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Día</span>
+                                    <input class="form-control" id="txtDia" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Mes</span>
+                                    <input class="form-control" id="txtMes" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Año</span>
+                                    <input class="form-control" id="txtAnio" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Tipo de año</span>
+                                    <select class="form-control" id="txtTipo" disabled>
+                                        <option>Hábil</option>
+                                        <option>No Hábil</option>
+                                    </select>
+                                    @*<input class="form-control" id="txtTipo" disabled />*@
+                                </div>
+                            </div>
+                            @*<div class="col-lg-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Estado</span>
+                                    <input class="form-control" id="txtEstado" disabled />
+                                </div>
+                            </div>*@
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Nota</span>
+                                    </div>
+                                    <textarea class="form-control" id="txtNota" disabled aria-label="With textarea"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button type="button" class="btn btn-dark" disabled style="float:right; margin-right:10px;" id="btnCancel">Cancelar</button>
+                                <button type="button" class="btn btn-warning btnNaranja" disabled style="float:right; margin-right:10px;" id="btnGuardar">Guardar</button>
+                                <button type="button" class="btn btn-warning btnNaranjaClaro" disabled style="float:right; margin-right:10px;" id="btnEditar">Editar</button>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Fecha/FecGestion.js"></script>
+}
+

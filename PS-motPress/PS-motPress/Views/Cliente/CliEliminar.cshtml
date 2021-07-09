@@ -1,0 +1,107 @@
+﻿@model  PS_motPress.Models.Cliente.ClsCliente
+@{
+    /**/
+
+    ViewBag.Title = "CliEliminar";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2>
+                            <strong>
+                                Eliminar Cliente - @Model.cApellido, @Model.cNombre  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                </svg>
+                            </strong>
+                        </h2><hr />
+                        <input hidden value="@Model.cCliId" name="cCliId" id="cCliId" />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-11">
+                    <div class="card">
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    Información Personal
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h6>Nombre:  @Model.cApellido, @Model.cNombre</h6>
+                                    <h6>Teléfono:  @Model.cTel</h6>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h6>Documento:  @Model.cDocumento</h6>
+                                    <h6>Nacimiento:  @Model.fechaNac</h6>
+                                </div>
+                                <div class="col-lg-4">
+                                    <h6>CUIT:  @Model.cCUIT</h6>
+                                    <h6>Email: @Model.cEmail</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    Información de Ubicación
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <p><strong>País:  </strong> @Model.cPais</p>
+                                    <p><strong>Barrio:  </strong> @Model.cBarrio</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <p><strong>Provincia:  </strong> @Model.cProvincia</p>
+                                    <p><strong>Calle:  </strong> @Model.cCalle</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <p><strong>Localidad:  </strong> @Model.cLocalidad</p>
+                                    <p><strong>Altura:  </strong> @Model.cAltura</p>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h6>Circustancias</h6>
+                                    <textarea class="form-control" id="txtCircunstancia" cols="40" rows="2" style="resize: both;min-width: 100%" placeholder="Escriba aquí las causas de la baja."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-12" style="text-align: center">
+                                    <button type="button" class="btn btn-danger" style="display:normal" id="btnBorrar">Eliminar</button>
+                                    <button type="button" id="btnClose" style="display:normal" class="btn btn-dark btnNegro">Cancelar</button>
+                                    <button class="btn btn-danger" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Cliente/CliEliminar.js"></script>
+}

@@ -1,0 +1,112 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "ProBusqueda";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Búsqueda de Productos</strong></h2><hr />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    @*<form class="form-inline">*@
+                    <div class="col-sm-3">
+
+                    </div>
+                    <div class="col-sm-4 col-auto">
+                        <div class="form-group mb-2">
+                            <div class="input-group mb-3" id="tablero">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Modelo</span>
+                                </div>
+                                <input type="text" class="form-control" name="parametro" id="parametro" placeholder="Buscar por nombre" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01">Marcas</label>
+                                </div>
+                                <select class="custom-select" id="marcas"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2" style="display: flex; align-items: center; padding-left:0px;">
+                        <div class="col-auto" id="botones" style="padding-left:0px;">
+                            <button type="button" id="btnBuscar" style="display:block" class="btn btn-warning btnNaranjaClaro">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg> Buscar
+                            </button>
+                            <button class="btn btn-warning btnNaranjaClaro" style="display:none" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-11" style="width: 100%">
+                <table class="table table-bordered" id="cargarTabla"></table>
+                <div id="sinResult"></div>
+            </div>
+        </div>
+    </div>
+    <input id="imgMiniaturaCasper" hidden />
+    <input id="imgGrandeCasper" hidden />
+    <div class="modal fade" id="motalInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background: #ececec">
+                    <div id="modalTitle"></div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div id="miniImg">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div id="parrafo">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="parrafo2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Producto/ProBusqueda.js"></script>
+}
+

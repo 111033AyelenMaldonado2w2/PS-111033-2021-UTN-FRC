@@ -1,0 +1,137 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "ParamGestion";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+    else
+    {
+        if (Session["rol"].Equals("Empleado"))
+        {
+            Response.Redirect("/Home/Index");
+        }
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="row contenedor">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-9">
+                    <h2><strong>Parámetros</strong></h2><hr />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-11">
+                    <div class="card">
+                        <div class="card-header">
+                            <label>Registro de Parámetro</label>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <input id="descripRegistro" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dominio</label>
+                                        <select id="domini" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                        <label>Descripción corta</label>
+                                        <input id="descripCortaRegistro" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-dark btnNegro" id="btnClose" style="float:right" type="button">Cancelar</button>
+                                    <button class="btn btn-warning btnNaranja" id="btnRegistrar" style="float:right; margin-right:10px;" type="button">Registrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="card">
+                        <div class="card-header">
+                            <label>Gestión de Parámetros</label>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-inline">
+                                <label style="margin-right:10px;">Seleccionar Parámetro</label>
+                                <select id="parametros" class="form-control" style="min-width:35%; margin-right:10px;"></select>
+                                <button type="button" id="btnBuscarParametros" style="margin-top:8px;" class="btn btn-warning btnNaranjaClaro mb-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <br />
+                            <div style="display:none" id="verTablas">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <table class="table table-bordered" id="tablaConParametros"></table>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-11">
+                                                <div class="form-group">
+                                                    <label>Nombre</label>
+                                                    <input id="descrip" disabled class="form-control" />
+                                                    <input id="idPr" hidden />
+                                                    <input id="domin" hidden />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Descripcion Corta</label>
+                                                    <input id="descripCorta" disabled class="form-control" />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-4" style="padding-right:0px;">
+                                                        <button type="button" style="width:86px;" id="btnEditar" disabled class="btn btn-warning btnNaranjaClaro mb-2">Editar</button>
+                                                    </div>
+                                                    <div class="col-lg-4" style="padding:0px;">
+                                                        <button type="button" style="width:86px;" id="btnGuardar" disabled class="btn btn-warning btnNaranja mb-2">Guardar</button>
+                                                    </div>
+                                                    <div class="col-lg-4" style="padding-left:0px;">
+                                                        <button type="button" disabled id="btnCancelar" class="btn btn-dark btnNegro mb-2">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-4"></div>
+                                                    <div class="col-lg-4"></div>
+                                                    <div class="col-lg-4" style="padding-left:0px;">
+                                                        <button type="button" disabled style="width:86px;" id="btnEliminar" class="btn btn-danger mb-2">Eliminar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+        </div> 
+    </div>
+    <script src="~/Scripts/Parametro/ParamGestion.js"></script>
+ }
+

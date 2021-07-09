@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "ProCatalogo";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<link rel="stylesheet" href="~/Content/aumetoImg.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="contenedor" ng-controller='menuCtrl as menu'>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <h4>Catálogo</h4>
+                <h6>Motos Disponibles</h6>
+                <hr /><br />
+                <div class="card">
+                    <div class="card-header">
+                        <div class="form-inline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" style="margin-right:10px" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" /></svg>
+                            <input placeholder="Buscar..." class="form-control" ng-model="moto.search">
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div id="visualizar" style="display:none">
+                    <div class="row">
+                        <div class="col-6 zoom" ng-repeat="moto in motosData | filter: moto.search">
+                            <div class="card border-dark mb-3">
+                                <div class="card-header">{{moto.cpNombre}}</div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @*<input value="{{moto.pRuta}}" class="miniatura" name="fileI[]"/>*@
+                                        <img ng-src="{{moto.cpImgMIni}}" id="Imini" class="card-img-left" style="height: 150px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card-text">
+                                            <p><strong>Marca: </strong>{{moto.cpMarca}}</p>
+                                            <p><strong>Categoria: </strong>{{moto.cpTipo}}</p>
+                                            <p><strong>Precio: </strong>${{moto.cpPrecio}} <label style="font-size: 9px">ARS</label></p>
+                                            <p><strong>Año: </strong>{{moto.cpAnio}}</p>
+                                            <button class="btn btn-warning btnNaranjaClaro float-right" type="button" style="margin-right: 10px; margin-bottom: 10px;" data-toggle="modal" data-target="#moto-info" ng-click="menu.changeActiveMoto(moto.cpIdProd)">
+                                                Leer Más
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="moto-info">
+                        <div class="modal-dialog">
+                            <div class="modal-content" ng-repeat="info in UnamotosData">
+                                <div class="modal-header">
+                                    <h2>{{info.cpNombre}}</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <section  id="contenido">
+                                            <figure>
+                                                <img ng-src="{{info.cpImgMax}}"  style="height: 200px; margin-left: 100px;"/>
+                                            </figure>
+                                        </section>
+                                        @*<div class="col-xs-8 col-xs-offset-2" style="text-align: center;" id="contenido">
+                                            <img ng-src="{{info.cpImgMax}}" class="zm img-rounded img-responsive" data-big="{{info.cpImgMax}}" data-overlay="~/Imagen/lupa.png" onmouseover="cambioImg()" style="height: 200px; margin-left: 100px;">
+                                        </div>*@
+                                    </div>
+                                    <br /><br />
+                                    <div class="row">
+                                        <div class="col-md-12" style="size: 12px;">
+                                            <p style="margin-bottom:5px"><strong>Año: </strong>{{info.cpAnio}}</p>
+                                            <p style="margin-bottom:5px"><strong>Motor: </strong>{{info.pMotor}}</p>
+                                            <p style="margin-bottom:5px"><strong>Cilindrada: </strong>{{info.pCilindrada}}</p>
+                                            <p style="margin-bottom:5px"><strong>Encendido: </strong>{{info.pArranque}}</p>
+                                            <p style="margin-bottom:5px"><strong>Combustible: </strong>{{info.pCombustible}}</p>
+                                            <p style="margin-bottom:5px"><strong>Kilimetraje: </strong>{{info.pKilometros}}</p>
+                                            <p style="margin-bottom:5px"><strong>Caja: </strong>{{info.pCaja}}</p>
+                                            <p style="margin-bottom:5px"><strong>Color: </strong>{{info.pColor}}</p>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p style="padding: 10px;">{{info.pDescripcion}}</p>
+                                            <button class="btn btn-danger float-right" data-dismiss="modal" style="margin-right: 10px; margin-bottom: 10px;">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

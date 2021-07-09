@@ -1,0 +1,994 @@
+﻿
+@{
+    ViewBag.Title = "Contacto";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2>
+                            <strong>
+                                Contactá con nosotros!
+                            </strong>
+                        </h2><hr />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-11">
+                        <div>
+                            <h4>Preguntas frecuentes</h4>
+                        </div>
+                        <br />
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <div class="form-inline">
+                                        <button class="bord btn-outline btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Cómo puedo cambiar mi contraseña?
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="float:right; color:orange" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <h5>Primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra1.png" class="card-img-top" alt="Primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                               <p>Para poder llevar a cabo el cambio de contraseña deberá dirigirse al botón situado en extremo superior derecho con la leyenda <b>"Ingresar"</b>, esto abrirá una ventana que podrá ver en el siguiente paso.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>La ventana que se abrió es la del Inicio de sesión.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra2.png" class="card-img-top" alt="Segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra3.png" class="card-img-top" alt="Tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Ahora bien, deberá hacer click en el enlace con la pregunta <b>"Has olvidado la contraseña?"</b>, como lo muestra el puntero. Lo cual abrirá una nueva ventana.</p>
+                                            </div>
+                                        <br />
+                                        <h5>Cuarto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Para poder cambiar la contraseña es necesario que complete el formulario con su usuario y con el correo registrado al momento de crear su usuario para que se le envíe un código de recuperación.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra4.png" class="card-img-top" alt="Cuarto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Cuarto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Quinto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra5.png" class="card-img-top" alt="Quinto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Quinto Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez completados los campos deberá hacer click en el botón como indica el puntero en la imagen de la derecha.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Sexto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez que haya enviado los datos, el proceso puede tardar unos segundos de más.</p>
+                                                <p>Cuando el correo se envió, el mismo tendrá un mensaje como el de la derecha.</p>
+                                                <p>Para continuar deberá hacer click al botón con la leyenda <b>"ok"</b>, y aparecerá una nueva pantalla.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra6.png" class="card-img-top" alt="Sexto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Sexto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Séptimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra7.png" class="card-img-top" alt="Séptimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Séptimo Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>La pantalla a continuación incluye un formulario que deberá completar con el nombre de su usuario, el código de 10(diez) dígitos que le llegará por correo y con su nueva contraseña.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Octavo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                               <p>Una vez que todos los datos estén cargados deberá darle click al botón situado al final como lo indica el puntero en la imagen.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra8.png" class="card-img-top" alt="Octavo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Octavo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Noveno paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra9.png" class="card-img-top" alt="Noveno paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Noveno Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si lo datos son correctos el sistema le enviará un mensaje de confirmación como el de la imagen.</p>
+                                                <p>Para continuar deberá hacer click al botón con la leyenda <b>"ok"</b>, y aparecerá nuevamente la pantalla de inicio de sesión.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Sólo escriba su nueva contraseña e ingrese al sistema.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/cambioContra10.png" class="card-img-top" alt="Décimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <div class="form-inline">
+                                        <button class="bord btn-outline btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Cómo puedo registrar un nuevo cliente?
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="float:right; color:orange" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <h5>Primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente1.png" class="card-img-top" alt="Primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez que haya iniciado sesión, deberá dirigirse al menú lateral y hacer click en el ícono superior, como se muestra en la imagen situada a la izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez clickeado el ícono se doblegará un menú lateral que se verá así: </p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente2.png" class="card-img-top" alt="Segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente3.png" class="card-img-top" alt="Tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>En la lista desplegada deberá seleccionar la opción donde se lee <b>"Clientes"</b>. Una vez clickeada la opción se desplegará a la vez una sub-lista como la verá a su izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Cuarto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>La opción a elegir es la que cita: <b>"Registro de Clientes"</b>.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente4.png" class="card-img-top" alt="Cuarto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Cuarto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Quinto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente5.png" class="card-img-top" alt="Quinto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Quinto Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>La opción seleccionada en el paso anterior lo llevará a la pantalla que se muestra al lado izquierdo.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Sexto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Recuerde que para poder llevar a cabo el registro de un nuevo cliente deberá completar obligatoriamente todos aquellos campos marcados con un <b>*</b>(asterisco).</p>
+                                                <p>Una vez que finalizó toda la carga de datos, deberá clickear en el botón naranja situado al final del formulario, como se muestra en la imagen derecha.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente6.png" class="card-img-top" alt="Sexto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Sexto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Séptimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente7.png" class="card-img-top" alt="Séptimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Séptimo Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si todo el procedimiento se llevó a cabo correctamente el sistema le mostrará el siguiente mensaje: </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <div class="form-inline">
+                                        <button class="bord btn-outline btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Cómo puedo registrar un crédito?
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="float:right; color:orange" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <h5>Primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente1.png" class="card-img-top" alt="Primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez que haya iniciado sesión, deberá dirigirse al menú lateral y hacer click en el ícono superior, como se muestra en la imagen situada a la izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez clickeado el ícono se desplegará un menú lateral que se verá así: </p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente2.png" class="card-img-top" alt="Segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito3.png" class="card-img-top" alt="Tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>En la lista desplegada deberá seleccionar la opción donde se lee <b>"Préstamos"</b>. Una vez clickeada la opción se desplegará a la vez una sub-lista como la verá a su izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Cuarto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>La opción a elegir es la que cita: <b>"Liquidación de Préstamos"</b>.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito4.png" class="card-img-top" alt="Cuarto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Cuarto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Quinto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito5.png" class="card-img-top" alt="Quinto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Quinto Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>La opción seleccionada en el paso anterior lo llevará a la pantalla que se muestra del lado izquierdo.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Sexto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Recuerde que para poder llevar a cabo el registro de un nuevo préstamo deberá completar obligatoriamente todos aquellos campos marcados con un <b>*</b>(asterisco).</p>
+                                                <p>La primera instancia a completar es "Documento", para ello deberá clickear en la lupa que se muestra en la imagen de la derecha.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito6.png" class="card-img-top" alt="Sexto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Sexto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Séptimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito7.png" class="card-img-top" alt="Séptimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Séptimo Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>El botón clickeado abrió otra ventana como la que verá a continuación.</p>
+                                                <p>En la pantalla encontrará un botón con la leyenda <b>"Nuevo Cliente"</b>, que lo llevará al formulario de registro de clientes en el caso de que aún no haya registrado al cliente.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Octavo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>En el caso de que el cliente ya haya sido registrado anteriormente podrá buscarlo tanto por nombre como por apellido.</p>
+                                                <p>Sólo deberá colocar la denominación en el espacio y clickear en el botón <b>"Buscar"</b>, como muestra la imagen.</p>
+                                                <p>En el caso de que conozca el documento de identidad, puedes realizar la búsqueda utilizando el mismo. Para ello deberá marcar como opción de búsqueda el ítem que dice <b>Documento</b>.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito8.png" class="card-img-top" alt="Octavo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Octavo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Noveno paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito9.png" class="card-img-top" alt="Noveno paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Noveno Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si la búsqueda encontró resultados coincidentes los mostrará en una tabla como en la imagen. Entre los resultados otorgados por la tabla debemos seleccionar el buscado haciendo <b>doble-click</b> en el botón situado a la derecha del registro como lo indica el puntero en la imagen. La ventana se cerrará y la información se incluirá en los campos correspondientes como  verá en el siguiente paso.</p>
+                                                <p>
+                                                    Si el sistema no encontró coincidencias mostrará un mensaje con la leyenda "No se encontraron registros", puede volverlo a intentar las veces que lo desee.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez cargado el documento, deberá definir cuál va a ser el producto involucrado en la venta por medio de la liquidación de créditos.</p>
+                                                <p>Para ello deberá clicker en el botón con un <b>"+"</b>, como lo indica el puntero en la imagen. Esto abrirá una ventana como podrá ver en el siguiente paso.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/reagistroCredito10.png" class="card-img-top" alt="Décimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito11.png" class="card-img-top" alt="Décimo-primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Esta nueva ventana permitirá la búsqueda de la motocicleta en cuestión por medio de su nombre.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>En el espacio asignado debe completar con el nombre de la misma.</p>
+                                                <p>Luego deberá clickear en el botón <b>"Buscar"</b>, como lo indica el puntero de la imagen a la derecha.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito12.png" class="card-img-top" alt="Décimo-segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito13.png" class="card-img-top" alt="Décimo-tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>
+                                                    Si el sistema encontró coincidencias las mostrará por medio de una tabla, en la misma deberá buscar la moto elegida y dar <b>"doble-click"</b> al final del registro de esta. La ventana se cerrará y la información se cargará automáticamente en la página, como podrá ver en el siguiente paso.
+                                                </p>
+                                                <p>Si el sistema no encontró coincidencias mostrará un mensaje con la leyenda "No se encontraron registros", puede volverlo a intentar las veces que lo desee. </p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-cuarto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-3">
+                                                <p>Una vez seleccionado el producto se incorporará al formulario tanto su nombre como su precio y definirá un importe estimado a refinanciar el cual se puede modificar.</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito14.png" class="card-img-top" alt="Décimo-cuarto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-cuarto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-quinto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito15.png" class="card-img-top" alt="Décimo-quinto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-quinto Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>En el caso de que el cliente desee entregar una "seña" o "adelanto", el monto se debe cargar en el espacio indicado por el puntero en la imagen a la izquierda.</p>
+                                                <p>En esta situación al precio de la moto se le restará automáticamente el monto "seña/adelanto" y este valor se le asignará a <b>monto a refinanciar</b>, el cual sigue siendo de carácter estimado debido a que se puede modificar. Estos cambios se verán en la imagen del próximo paso.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-sexto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-3">
+                                                <p>Como se puede apreciar en la imagen, el <b>importe a refinanciar</b> pasó de 1750000 a 1700000.</p>
+                                                <p>Recuerde que se deberán cargar todos los campos marcados con un <b>*</b>(asterisco).</p>
+                                                <p>Algunas aclaraciones para tener en cuenta son: el plan hace referencia a la cantidad de cuotas en las que se va dividir el crédito. El día de vencimiento refiere a que día (del 1 al 30) desea que venza la cuota del cliente (generalmente es el día 10). El tipo de vencimiento refiere al intervalo de tiempo entre cada cuota. Y finalmente la tasa mensual refiere al interés directo que se va a aplicar a cada cuota.</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito16.png" class="card-img-top" alt="Décimo-sexto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-sexto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-séptimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-8">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito17.png" class="card-img-top" alt="Décimo-séptimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-séptimo Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <p>Una vez que todos los datos requeridos se completaron, deberá hacer click en el botón <b>"Calcular"</b> para que genere la tabla de cuotas estimadas que se puede ver en el siguiente paso.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-octavo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-3">
+                                               <p>En la imagen se muestra el estimado de cada cuota a partir de los valores ingresados.</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito18.png" class="card-img-top" alt="Décimo-octavo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-octavo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-noveno paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito19png.png" class="card-img-top" alt="Décimo-noveno paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-noveno Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si desea incorporar alguna observación al crédito lo puede hacer en el espacio indicado con el puntero.</p>
+                                                <p>Si la información fue correcta y el cliente está de acuerdo con la situación, deberá hacer click en el botón ubicado al final de la página que incluye la leyenda <b>"Confirmar Préstamo"</b>.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Vigésimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Si todo fue correcto y el crédito grabado en el sistema, se mostrará en pantalla la siguiente imagen.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCredito20.png" class="card-img-top" alt="Vigésimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Vigésimo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFour">
+                                    <div class="form-inline">
+                                        <button class="bord btn-outline btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                            Cómo puedo registrar el cobro de una cuota?
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="float:right; color:orange" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <h5>Primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente1.png" class="card-img-top" alt="Primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez que hayas iniciado sesión, deberá dirigirse al menú lateral y hacer click en el ícono superior, como se muestra en la imagen situada a la izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez clickeado el ícono se desplegará un menú lateral que se verá así: </p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente2.png" class="card-img-top" alt="Segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro3.png" class="card-img-top" alt="Tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>En la lista desplegada deberá seleccionar la opción donde se lee <b>"Cobranzas"</b>. Una vez clickeada la opción se desplegará a la vez una sub-lista como la verá a su izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Cuarto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>La opción a elegir es la que cita: <b>"Gestión de Cuotas"</b>.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro4.png" class="card-img-top" alt="Cuarto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Cuarto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Quinto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro5.png" class="card-img-top" alt="Quinto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Quinto Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>La opción seleccionada en el paso anterior lo llevará a la pantalla que se muestra del lado izquierdo.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Sexto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Ahora bien lo primero que tendrá que hacer es seleccionar al cliente al cual se le van a cancelar las deudas.</p>
+                                                <p>Para ello deberá hacer click en el botón con la lupa, como muestra el puntero en la imagen de la derecha. Esto abrirá una ventana que puede ver en el siguiente paso.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro6.png" class="card-img-top" alt="Sexto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Sexto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Séptimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/regstroCobro7.png" class="card-img-top" alt="Séptimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Séptimo Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>El cliente puede ser buscado tanto por sus nombres como por su número de documento.</p>
+                                                <p>Para buscarlo por documento deberá marcar la opción "Documento" antes de iniciar la búsqueda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Octavo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>En este caso la búsqueda es por denominación por lo que procederemos a incluir un nombre del cliente en la instancia disponible.</p>
+                                                <p>Para que el sistema busque resultados, deberá hacer click en el botón "Buscar" como lo muestra el puntero.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro7.png" class="card-img-top" alt="Octavo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Octavo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Noveno paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro8.png" class="card-img-top" alt="Noveno paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Noveno Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si la búsqueda encontró resultados coincidentes los mostrará en una tabla como en la imagen. Entre los resultados otorgados por la tabla deberá seleccionar el que esta buscando haciendo <b>doble-click</b> en el botón situado a la derecha del registro como lo indica el puntero en la imagen. La ventana se cerrará y la información se incluirá en los campos correspondientes como  verá en el siguiente paso.</p>
+                                                <p>
+                                                    Si el sistema no encontró coincidencias mostrará un mensaje con la leyenda "No se encontraron registros", puede volverlo a intentar las veces que lo desee.
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-3">
+                                                <p>Una vez cargado el cliente, podrá visualizar una tabla con los préstamos activos que posee el mismo.</p>
+                                                <p>Al final de cada registro hay un botón, cuando encuentre el préstamo en cuestión deberá hacer <b>"doble-click"</b> sobre el botón al final y se desplegará una tabla con las cuotas pertenecientes al préstamo elegido.</p>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro9.png" class="card-img-top" alt="Décimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-8">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro10.png" class="card-img-top" alt="Décimo-primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <p>A continuación podemos observar en la imagen las cuotas pertenecientes al préstamo seleccionado.</p>
+                                                <p>Al final de cada registro, como muestra el puntero, permite la selección de una cuota a cobrar.</p>
+                                                <p>Para su selección deberá hacer <b>"doble-click"</b> en el botón situado al final del registro. Esto desbloqueará los campos correspondientes y explayará información del préstamo del lado derecho de la pantalla.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Si se va a pagar la cuota completa, solo debe verificar que la fecha de cobro de la misma sea correcta.</p>
+                                                <p>Si todo está en orden haciendo un click en el botón señalado por el puntero podrá proceder a la cancelación del saldo de la cuota.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro11.png" class="card-img-top" alt="Décimo-segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Décimo-tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro12.png" class="card-img-top" alt="Décimo-tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Décimo-tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si todo el proceso fue correcto el sistema le enviará un mensaje como el de la imagen.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFive">
+                                    <div class="form-inline">
+                                        <button class="bord btn-outline btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                                            Cómo puedo registrar un nuevo producto?
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="float:right; color:orange" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <h5>Primer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCobro12.png" class="card-img-top" alt="Primer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Primer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez que hayas iniciado sesión, debes dirigirte al menú lateral y hacer click en el ícono superior, como te muestro en la imagen situada a la izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Segundo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Una vez clickeado el ícono se desplegará un menú lateral que se verá así: </p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroCliente2.png" class="card-img-top" alt="Segundo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Segundo Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Tercer paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroProducto33.png" class="card-img-top" alt="Tercer paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Tercer Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>En la lista desplegada deberás seleccionar la opción donde se lee <b>"Productos"</b>. Una vez clickeada la opción se desplegará a la vez una sub-lista como la que está a su izquierda.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Cuarto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>La opción a elegir es la que cita: <b>"Registro de Productos"</b>.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroProducto3.png" class="card-img-top" alt="Cuarto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Cuarto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Quinto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroProducto4.png" class="card-img-top" alt="Quinto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Quinto Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>La opción seleccionada en el paso anterior lo llevará a la pantalla que se muestra del lado izquierdo.</p>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Sexto paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <p>Recuerda que poder llevar a cabo el registro de un nuevo producto deberá completar obligatoriamente todas aquellas instancias marcadas con un <b>*</b>(asterisco).</p>
+                                                <p>Una vez que finalizaste toda la carga de datos, debes clickear en el botón naranja situado al final del formulario, como se ve en la imagen derecha.</p>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroProducto5.png" class="card-img-top" alt="Sexto paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Sexto Paso</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Séptimo paso</h5>
+                                        <div class="row">
+                                            <div class="col-lg-1"></div>
+                                            <div class="col-lg-5">
+                                                <div class="card">
+                                                    <img src="~/Imagen/Tutorial/registroProducto6.png" class="card-img-top" alt="Séptimo paso!">
+                                                    <small class="text-muted" style="float:right; text-align:right">Séptimo Paso</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <p>Si todo el procedimiento se llevó a cabo correctamente el sistema le mostrará el siguiente mensaje: </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingSix">
+                                    <div class="form-inline">
+                                        <button class="bord btn-outline btn-block text-left collapsed bord" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseThree">
+                                            Dónde puedo enviar una consulta o sugerencia?
+                                            <svg xmlns="http://www.w3.org/2000/svg" style="float:right; color:orange" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Si quiere enviarnos sus dudas o sugerencias puede enviarnos un correo a esta dirección   <i>consultasmotpres@gmail.com</i>
+                                        @*<br /><br />
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-7">
+                                                <div class="col-auto">
+                                                    <div class="form-group">
+                                                        <input class="form-control" style="min-width:100%" type="email" id="correo" placeholder="Correo Electrónico" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="form-group">
+                                                        <input class="form-control" style="min-width:100%" id="6Asunto" placeholder="Asunto" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" style="min-width:100%;  max-height:200px;" id="6Mensaje" placeholder="Mensaje"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button type="button" style="float:right" id="btnEnviarCorreo" class="btn btn-warning btnNaranjaClaro">Enviar Correo!</button>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Principal/Contacto.js"></script>
+}
+

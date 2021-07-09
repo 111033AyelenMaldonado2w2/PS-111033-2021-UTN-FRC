@@ -1,0 +1,98 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "CliHistorial";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2>
+                            <strong>
+                                Historial de Clientes
+                            </strong>
+                        </h2><hr />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+        <div class="row" ng-controller="cliCtrol as cli">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="form-inline">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" style="margin-right:10px" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" /></svg>
+                            <input placeholder="Buscar..." class="form-control" ng-model="c.search">
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="verTdo" style="display:none">
+                    <table class="table table-hover" id="tablaClientes">
+                        <thead>
+                            <tr>
+                                <th hidden>id</th>
+                                <th>Nombre</th>
+                                <th>Documento</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="c in dataTable | filter: c.search">
+                                <td hidden>{{c.cCliId}}</td>
+                                <td>{{c.cApellido}}, {{c.cNombre}}</td>
+                                <td>{{c.cDocumento}}</td>
+                                <td>{{c.cEmasil}}</td>
+                                <td>{{c.cTel}}</td>
+                                <td ng-if="c.cEstado == 613"><button type="button" class="btn btn-success btn-sm" style="width:66px">Activo</button></td>
+                                <td ng-if="c.cEstado == 615"><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalAlta" ng-click="cli.clienteSeleccionado(c)">Inactivo</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal fade" id="modalAlta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Activación de Cliente</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <h6>Circuntancias de la Baja</h6>
+                                <textarea class="form-control" disabled style="min-width: 100%">{{cli.clienteTomado.cNotaBaja}}</textarea>
+                                <input hidden value="{{cli.clienteTomado.cCliId}}" id="codCli" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-success" id="btnActivar">Activar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+}
+
