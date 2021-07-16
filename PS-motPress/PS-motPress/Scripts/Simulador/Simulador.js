@@ -149,8 +149,8 @@ $(document).ready(function () {
 
                             body += '<tr><td style="text-align:center">' + result[i].sNroCuota + '</td>' +
                                 '<td style="text-align:right"> $ ' + formateoPuntosyComas(capital) + '</td>' +
-                                '<td style="text-align:right"> $ ' + formateoPuntosyComas(parseFloat(result[i].sInteresCuota).toFixed(2)) + '</td>' +
-                                '<td style="text-align:right"> $ ' + formateoPuntosyComas(parseFloat(result[i].sValorCuota).toFixed(2)) + '</td>' +
+                                '<td style="text-align:right"> $ ' + formateoPuntosyComas(result[i].sInteresCuota) + '</td>' +
+                                '<td style="text-align:right"> $ ' + formateoPuntosyComas(result[i].sValorCuota) + '</td>' +
                                 '<td style="text-align:center">' + fecha + '</td>' +
                                 '<td style="text-align:right"> $ ' + formateoPuntosyComas(parseFloat(result[i].sCapitalAmortizado).toFixed(2)) + '</td></tr>';
 

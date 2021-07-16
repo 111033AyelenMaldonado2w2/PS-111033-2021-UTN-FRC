@@ -1000,17 +1000,17 @@ function imprimirContrato()
     var text1 = 'PRIMERA: "EL MUTANTE" cede en préstamo y hace entrega en este acto la suma de pesos ' + montoLetra + ' (' + montoSolicitadoOriginal + ') moneda Argentina a "El MUTUARIO" y éste acepta.';
     doc.text(text1, 27, 85, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
     var text2 = 'SEGUNDA: El término del presente CONTRATO DE MUTUO es el ' + Presfecha + ', y la forma de pago se pacta en el siguiente plazo: ' + planLetra + ' (' + plan + ') cuotas consecutivas y mensuales, pagaderas cada cuota del 1 al 10 de cada mes a partir del mes ' + PresfechaPrimera + ' inclusive, siendo cada cuota por el monto de pesos ' + cuotaLetra + ' ($' + cuotaFinal + '), con más los intereses pactados en el caso de mora o atraso.';
-    doc.text(text2, 27, 100, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
+    doc.text(text2, 27, 105, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
     var text3 = 'TERCERA: La falta de pago de una(1) de las cuotas acordadas, encontrándose vencido el término del presente CONTRATO DE MUTUO, habilita "AL MUTUANTE" a realizar las gestiones de cobro extrajudiciales y judiciales correspondientes a fin de garantizar el pago de la totalidad del monto adeudado a la fecha.';
-    doc.text(text3, 27, 130, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
+    doc.text(text3, 27, 135, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
     var text4 = 'CUARTA: Ambas partes acuerdan fijar un interés mensual por la mora del 2% mensual mas la tasa pasiva del banco central(TPBC) al momento de producirse la mora, sobre cada cuota adeudada. Dicho interés corre hasta el efectivo pago de la totalidad del monto adeudado por "EL MUTUARIO".';
-    doc.text(text4, 27, 150, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
+    doc.text(text4, 27, 155, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
     var text5 = 'QUINTA: Si por cualquier causa "EL MUTUARIO" decidiera rescindir anticipadamente el presente contrato, deberá notificar con una antelación de Diez(10) días por medio fehaciente a "EL MUTUANTE" su determinación, entregando el dinero objeto del presente contrato con más los interes generados hasta la fecha.';
-    doc.text(text5, 27, 170, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
+    doc.text(text5, 27, 175, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
     var text6 = 'SEXTA: Las partes constituyen domicilio a los efectos del presente contrato, "EL MUTUANTE" en el expresado supra y "EL MUTUARIO" en calle UNA CALLE B° UN BARRIO, de la Ciudad de Córdoba, todos los cuales subsistirán mientras no se notifiquen otros en forma fehaciente, sometiéndose todas las partes a la jurisdicción de los Tribunales Ordinarios de la Ciudad de Córdoba, renunciando expresamente al Fuero Federal o a cualquier otro de excepción que pudiere corresponderles, firmando en prueba de conformidad, dos ejemplares de un mismo tenor y a un solo efecto en la Ciudad de Córdoba.- - - - - - - - - - - - - - - - - - - -';
-    doc.text(text6, 27, 190, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
+    doc.text(text6, 27, 195, { align: 'justify', lineHeightFactor: 0.5, maxWidth: 160 });
     var firma = '----------------------                      -----------------------                   -------------------\nFIRMA                               ACLARACION                          DNI\nFULANO\nD.N.I N° 00.000.000';
-    doc.text(firma, 27, 240);
+    doc.text(firma, 27, 245);
 
     doc.save('ContratoMOTPRES' + output + '.pdf');
 

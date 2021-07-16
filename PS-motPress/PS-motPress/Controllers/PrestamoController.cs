@@ -103,6 +103,14 @@ namespace PS_motPress.Controllers
         }
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [HttpPost]
+        public JsonResult BusquedaPrestamosActivos(string sitio = "")
+        {
+            List<ClsDatosPrestamo> lista = null;
+            lista = AccesoDatos.busquedaDePrestamosActivos(sitio);
+            return Json(lista);
+        }
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        [HttpPost]
         public JsonResult BusquedaPrestamos(string sitio = "")
         {
             List<ClsDatosPrestamo> lista = null;
@@ -134,7 +142,7 @@ namespace PS_motPress.Controllers
         public JsonResult generaciónTablaRefinan(ClsPrestamo p, string pMontoSolicitado1 = "")
         {
             List<ClsPrestamo> resultado = null;
-            resultado = AccesoDatos.generacionTablaPrestamo(p, pMontoSolicitado1);
+            resultado = AccesoDatos.generacionTablaPrestamoReliqui(p, pMontoSolicitado1);
             return Json(resultado);
         }
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]

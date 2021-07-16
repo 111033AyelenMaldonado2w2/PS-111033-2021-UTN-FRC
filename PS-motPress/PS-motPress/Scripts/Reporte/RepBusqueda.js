@@ -1000,9 +1000,9 @@ function tomarCliente2() {
                                     '<td>' + result[i].dpEstado + '</td>' +
                                     '<td style="text-align:center">' + fecha1 + '</td>' +
                                     '<td style="text-align:center">' + result[i].dpPlan + '</td>' +
-                                    '<td style="text-align:right"> $ ' + parseFloat(result[i].dpMontoSolicitado).toFixed(2) + '</td>' +
-                                    '<td style="text-align:right"> $ ' + parseFloat(result[i].dpCapitalFinanciado).toFixed(2) + '</td>' +
-                                    '<td style="text-align:right"> $ ' + parseFloat(result[i].pImporteCobrado).toFixed(2) + '</td>' +
+                                    '<td style="text-align:right"> $ ' + result[i].dpMontoSolicitado + '</td>' +
+                                    '<td style="text-align:right"> $ ' + formateoPuntos(result[i].dpCapitalFinanciado) + '</td>' +
+                                    '<td style="text-align:right"> $ ' + formateoPuntos(result[i].pImporteCobrado) + '</td>' +
                                     '<td hidden="true">' + result[i].dpPorcej + '</td>' +
                                     '<td hidden="true">' + result[i].dpIntervaloCobro + '</td>' +
                                     '<td hidden="true">' + result[i].dpCuotasCobradas + '</td>' +
@@ -1143,13 +1143,13 @@ function visualCuotas() {
 
                                 html += '<tr><td style="text-align:center">' + result[i].cNroCuota + '</td>' +
                                     '<td style="text-align:center">' + result[i].cDesc + '</td>' +
-                                    '<td style="text-align:right"> $' + parseFloat(result[i].cImpCapital).toFixed(2) + '</td>' +
-                                    '<td style="text-align:right"> $' + parseFloat(result[i].cImpInteres).toFixed(2) + '</td>' +
+                                    '<td style="text-align:right"> $' + formateoPuntosyComas(result[i].cImpCapital) + '</td>' +
+                                    '<td style="text-align:right"> $' + formateoPuntosyComas(result[i].cImpInteres) + '</td>' +
                                     '<td style="text-align:center">' + fechaVenc + '</td>' +
-                                    '<td style="text-align:right"> $' + parseFloat(result[i].cImpCuota).toFixed(2) + '</td>' +
+                                    '<td style="text-align:right"> $' + formateoPuntosyComas(result[i].cImpCuota) + '</td>' +
                                     '<td style="text-align:right"> $' + parseFloat(result[i].cSaldoImpago).toFixed(2) + '</td>' +
                                     '<td style="text-align:center">' + fechaCobro + '</td>' +
-                                    '<td style="text-align:right"> $' + parseFloat(result[i].cImpCobrado).toFixed(2) + '</td>' +
+                                    '<td style="text-align:right"> $' + formateoPuntosyComas(result[i].cImpCobrado) + '</td>' +
                                     '</tr>';
                             }
                             $('#tablaReporte').html(cabecera + '<tbody>' + html + '</tbody>');

@@ -234,7 +234,7 @@ namespace PS_motPress.Controllers
             string imgMiniatura = "";
             //string imgGrande = ImgFile.FileName.ToString();
             //string imgMiniatura = ImgMiniatura.FileName.ToString();
-            if (ImgFile != null)
+            if (ImgFile != null && ImgMiniatura != null)
             {
                 byte[] imageData1 = null;
                 byte[] imageData2 = null;
@@ -247,6 +247,52 @@ namespace PS_motPress.Controllers
                     imageData2 = image2.ReadBytes(ImgMiniatura.ContentLength);
                 }
                 p.pImage = imageData1;
+                p.pRuta = imageData2;
+                //string adjunto = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(ImgFile.FileName);
+                //ImgFile.SaveAs(Server.MapPath("~/Content/ImagenProducto/" + ImgFile.FileName));
+                rta = AccesoDatos.editarProducto(p, imgGrande, imgMiniatura);
+                if (rta)
+                {
+                    return Json(respuesta.correcto);
+                }
+
+            }
+            else if (ImgFile != null && ImgMiniatura == null)
+            {
+                byte[] imageData1 = null;
+                byte[] imageData2 = null;
+                using (var image = new BinaryReader(ImgFile.InputStream))
+                {
+                    imageData1 = image.ReadBytes(ImgFile.ContentLength);
+                }
+                //using (var image2 = new BinaryReader(ImgMiniatura.InputStream))
+                //{
+                //    imageData2 = image2.ReadBytes(ImgMiniatura.ContentLength);
+                //}
+                p.pImage = imageData1;
+                p.pRuta = null;
+                //string adjunto = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(ImgFile.FileName);
+                //ImgFile.SaveAs(Server.MapPath("~/Content/ImagenProducto/" + ImgFile.FileName));
+                rta = AccesoDatos.editarProducto(p, imgGrande, imgMiniatura);
+                if (rta)
+                {
+                    return Json(respuesta.correcto);
+                }
+
+            }
+            else if (ImgFile == null && ImgMiniatura != null)
+            {
+                byte[] imageData1 = null;
+                byte[] imageData2 = null;
+                //using (var image = new BinaryReader(ImgFile.InputStream))
+                //{
+                //    imageData1 = image.ReadBytes(ImgFile.ContentLength);
+                //}
+                using (var image2 = new BinaryReader(ImgMiniatura.InputStream))
+                {
+                    imageData2 = image2.ReadBytes(ImgMiniatura.ContentLength);
+                }
+                p.pImage = null;
                 p.pRuta = imageData2;
                 //string adjunto = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(ImgFile.FileName);
                 //ImgFile.SaveAs(Server.MapPath("~/Content/ImagenProducto/" + ImgFile.FileName));

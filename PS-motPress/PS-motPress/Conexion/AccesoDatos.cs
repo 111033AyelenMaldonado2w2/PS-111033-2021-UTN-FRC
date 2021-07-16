@@ -1826,6 +1826,109 @@ namespace PS_motPress.Conexion
             }
             return ultimo.ToString();
         }
+        public static List<ClsPrestamo> generacionTablaPrestamoReliqui(ClsPrestamo p, string monto)
+        {
+            List<ClsPrestamo> lista = new List<ClsPrestamo>();
+
+            int mCantField = 0;
+            double mCuota = 0;
+            double minteres = 0;
+            double mAmortig = 0;
+            int meses = 0;
+            int mdias = 0;
+            string monto1 = "";
+            string tipoCobranza = "";
+            string interes1 = p.pInteres.ToString();
+            if(!monto.Equals("NaN") && monto != "")
+            {
+                monto1 = monto;
+            }
+            else if(p.pMontoSolicitado != "")
+            {
+                monto1 = p.pMontoSolicitado.ToString();
+            }
+            else
+            {
+                string deudita = p.pDeuda;
+                deudita = deudita.Replace('$', ' ');
+                monto1 = deudita;
+            }
+            p.pInteres = fx.ReemplazoComaDecimal(interes1);
+            //p.pMontoSolicitado = p.pMontoSolicitado.Replace(".", "");
+            p.pMontoSolicitado = fx.ReemplazoComaDecimal(p.pMontoSolicitado);
+            p.pPlan = p.pPlan;
+            p.pTipoCobro = p.pTipoCobro;
+            p.pDiaVencimiento = p.pDiaVencimiento;
+            //p.pFechaPrimeraCuota = DateTime.Format("{0:dd-MM-yyyy}", p.pFechaPrimeraCuota);
+            p.pFechaPrimeraCuota = p.pFechaPrimeraCuota;
+            int cantCuotas = Convert.ToInt32(p.pPlan);
+
+            mCuota = Math.Round(Convert.ToDouble(p.pMontoSolicitado) / Convert.ToDouble(p.pPlan), 2);
+            minteres = Math.Round(((mCuota * (Convert.ToDouble(p.pInteres) * Convert.ToDouble(p.pPlan))) / Convert.ToDouble(100)), 2);
+            mAmortig = Math.Round(Convert.ToDouble(p.pMontoSolicitado));
+
+            DateTime Fechas = new DateTime();
+            DateTime Fecha = new DateTime();
+            Fechas = Convert.ToDateTime(p.pFechaPrimeraCuota);
+
+            for (int i = 0; i < cantCuotas; i++)
+            {
+                ClsPrestamo t = new ClsPrestamo();
+                if (i == 0)
+                {
+                    Fecha = Convert.ToDateTime(p.pFechaPrimeraCuota);
+                }
+                else
+                {
+                    if (i == 1)
+                    {
+                        DateTime mFecha = new DateTime(Fecha.Year, Fecha.Month, Convert.ToInt32(p.pDiaVencimiento));
+                        Fechas = mFecha;
+                    }
+
+                    switch (p.pTipoCobro)
+                    {
+                        case 661:
+                            Fecha = Fechas.AddMonths(1);
+                            Fechas = Fecha;
+                            break;
+                        case 662:
+                            Fecha = Fechas.AddMonths(2);
+                            Fechas = Fecha;
+                            break;
+                        case 663:
+                            Fecha = Fechas.AddMonths(6);
+                            Fechas = Fecha;
+                            break;
+                        case 664:
+                            Fecha = Fechas.AddDays(15);
+                            Fechas = Fecha;
+                            break;
+                        case 665:
+                            Fecha = Fechas.AddDays(7);
+                            Fechas = Fecha;
+                            break;
+                        case 666:
+                            Fecha = Fechas.AddDays(1);
+                            Fechas = Fecha;
+                            break;
+                    }
+                }
+
+                t.nroCuota = i + 1;
+                t.capital = String.Format("{0:0#.00}", mCuota);
+                t.capital = t.capital.Replace(',', '.');
+                t.interes = String.Format("{0:0#.00}", minteres);
+                t.interes = t.interes.Replace(',', '.');
+                t.fecha = String.Format("{0:dd-MM-yyyy}", Fecha);
+                t.capFinal = String.Format("{0:#.00}", fx.CalcTotalFinanciado(fx.ReemplazoComaDecimal(p.pMontoSolicitado), fx.ReemplazoComaDecimal(interes1), p.pPlan.ToString()));
+                t.capFinal = t.capFinal.Replace(',', '.');
+                t.intFinal = String.Format("{0:#.00}", fx.CalcTotalInteres(fx.ReemplazoComaDecimal(p.pMontoSolicitado), fx.ReemplazoComaDecimal(interes1), p.pPlan.ToString()));
+                t.intFinal = t.intFinal.Replace(',', '.');
+                lista.Add(t);
+            }
+            return lista;
+        }
         public static List<ClsPrestamo> generacionTablaPrestamo(ClsPrestamo p, string monto)
         {
             List<ClsPrestamo> lista = new List<ClsPrestamo>();
@@ -2143,6 +2246,74 @@ namespace PS_motPress.Conexion
             }
             return resultado;
         }
+        public static List<ClsDatosPrestamo> busquedaDePrestamosActivos(string documento)
+        {
+            List<ClsDatosPrestamo> lista = new List<ClsDatosPrestamo>();
+            SqlConnection cnn = new SqlConnection(cadenaConexion);
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+
+                string consulta = @"select p.PresContratoNro, p.PresMontoSolicitado, p.PresPlan, p.PresPorcMensual, p.PresEntrega, p.PresFecha, p.PresNota ,p.PresFechaPrimeraCuota, p.PresIdProducto, pr.proNombre,pr.proId, a.descripcion,
+                    p.PresDiadelMesCuota, p.PresIntervaloCobranza, p.PresFecaud, p.PresUsuario, c.cliApellido, p.PresEstado, t.descripcionCorta,
+                    isnull(sum(CONVERT(float,CuoImporteCapital) + CONVERT(float,CuoImporteIntereses)),0) Capital_Financiado  , isnull(sum(CONVERT(float, REPLACE (cuoImporteCobrado, ',' , '.' ))),0) cobrado,
+                    sum(CASE WHEN [CuoEstado] = 643 then 1 else 0 end) cuotascobrados 
+                    from Prestamos p LEFT JOIN Clientes c ON p.PresCliId = c.cliId LEFT JOIN Tabla_Parametros t ON p.PresEstado = t.Id_Param LEFT JOIN
+                    cuotas cu on cu.CuoPrestamosId = p.PresContratoNro INNER JOIN Productos pr on pr.proId = p.PresIdProducto
+                    INNER JOIN Tabla_Parametros a ON a.Id_Param = pr.proMarca
+                   WHERE CONVERT(decimal,cliDocumento) = @cliDoc and PresEstado= 613 
+                   group by p.PresContratoNro, p.PresMontoSolicitado, p.PresPlan, p.PresPorcMensual, p.PresFecha, p.PresEntrega, p.PresFechaPrimeraCuota, p.PresDiadelMesCuota, 
+	               p.PresIntervaloCobranza, p.PresFecaud, p.PresUsuario, c.cliApellido, p.PresEstado, t.descripcionCorta, p.PresIdProducto,pr.proNombre, a.descripcion, pr.proId, p.PresNota
+                   order by p.PresContratoNro Asc";
+
+                cmd.CommandType = System.Data.CommandType.Text;
+                cmd.CommandText = consulta;
+                cnn.Open();
+                cmd.Connection = cnn;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@cliDoc", documento);
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr != null)
+                {
+                    while (dr.Read())
+                    {
+                        ClsDatosPrestamo p = new ClsDatosPrestamo();
+                        p.dpApellidoCliente = dr["cliApellido"].ToString();
+                        p.dpCapitalFinanciado = dr["Capital_Financiado"].ToString();
+                        p.dpCuotasCobradas = Convert.ToInt32(dr["cuotascobrados"].ToString());
+                        p.dpDiaVencim = Convert.ToInt32(dr["PresDiadelMesCuota"].ToString());
+                        p.dpEstado = dr["descripcionCorta"].ToString();
+                        p.dpEstadoPrestamo = Convert.ToInt32(dr["PresEstado"].ToString());
+                        p.dpFecha = Convert.ToDateTime(dr["PresFecha"].ToString());
+                        p.dpFechaModif = Convert.ToDateTime(dr["PresFecaud"].ToString());
+                        p.pImporteCobrado = dr["cobrado"].ToString();
+                        p.dpIntervaloCobro = dr["PresIntervaloCobranza"].ToString();
+                        p.dpMontoSolicitado = dr["PresMontoSolicitado"].ToString();
+                        p.dpNroContrato = Convert.ToInt32(dr["PresContratoNro"].ToString());
+                        p.dpPlan = Convert.ToInt32(dr["PresPlan"].ToString());
+                        p.dpPorcej = Convert.ToDecimal(dr["PresPorcMensual"].ToString());
+                        p.dpPrimeraCuota = Convert.ToDateTime(dr["PresFechaPrimeraCuota"].ToString());
+                        p.dpUsuario = dr["PresUsuario"].ToString();
+                        p.dpNombreMoto = dr["proNombre"].ToString();
+                        p.dpMarcaMoto = dr["descripcion"].ToString();
+                        p.pIDproducto = Convert.ToInt32(dr["proId"].ToString());
+                        p.dpNota = dr["PresNota"].ToString();
+                        p.dpEntrega = Convert.ToDouble(dr["PresEntrega"].ToString());
+                        lista.Add(p);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            return lista;
+        }
         public static List<ClsDatosPrestamo> busquedaDePrestamos(string documento)
         {
             List<ClsDatosPrestamo> lista = new List<ClsDatosPrestamo>();
@@ -2158,7 +2329,7 @@ namespace PS_motPress.Conexion
                     from Prestamos p LEFT JOIN Clientes c ON p.PresCliId = c.cliId LEFT JOIN Tabla_Parametros t ON p.PresEstado = t.Id_Param LEFT JOIN
                     cuotas cu on cu.CuoPrestamosId = p.PresContratoNro INNER JOIN Productos pr on pr.proId = p.PresIdProducto
                     INNER JOIN Tabla_Parametros a ON a.Id_Param = pr.proMarca
-                   WHERE CONVERT(decimal,cliDocumento) = @cliDoc and PresEstado= 613
+                   WHERE CONVERT(decimal,cliDocumento) = @cliDoc and (PresEstado= 613 or presestado = 682)
                    group by p.PresContratoNro, p.PresMontoSolicitado, p.PresPlan, p.PresPorcMensual, p.PresFecha, p.PresEntrega, p.PresFechaPrimeraCuota, p.PresDiadelMesCuota, 
 	               p.PresIntervaloCobranza, p.PresFecaud, p.PresUsuario, c.cliApellido, p.PresEstado, t.descripcionCorta, p.PresIdProducto,pr.proNombre, a.descripcion, pr.proId, p.PresNota
                    order by p.PresContratoNro Asc";
@@ -2221,12 +2392,12 @@ namespace PS_motPress.Conexion
 
                 string consulta = @"select p.PresContratoNro, p.PresMontoSolicitado, p.PresPlan, p.PresPorcMensual, p.PresEntrega, p.PresFecha, p.PresNota ,p.PresFechaPrimeraCuota, p.PresIdProducto, pr.proNombre,pr.proId, a.descripcion,
                     p.PresDiadelMesCuota, p.PresIntervaloCobranza, p.PresFecaud, p.PresUsuario, c.cliApellido, p.PresEstado, t.descripcionCorta,
-                    isnull(sum(CONVERT(float,CuoImporteCapital) + CONVERT(float,CuoImporteIntereses)),0) Capital_Financiado  , convert(numeric(18,2),isnull(sum(CONVERT(float,cuoImporteCobrado)),0)) cobrado,
+                    isnull(sum(CONVERT(float,CuoImporteCapital) + CONVERT(float,CuoImporteIntereses)),0) Capital_Financiado  , isnull(sum(CONVERT(float, REPLACE (cuoImporteCobrado, ',' , '.' ))),0) cobrado,
                     sum(CASE WHEN [CuoEstado] = 643 then 1 else 0 end) cuotascobrados 
                     from Prestamos p LEFT JOIN Clientes c ON p.PresCliId = c.cliId LEFT JOIN Tabla_Parametros t ON p.PresEstado = t.Id_Param LEFT JOIN
                     cuotas cu on cu.CuoPrestamosId = p.PresContratoNro INNER JOIN Productos pr on pr.proId = p.PresIdProducto
                     INNER JOIN Tabla_Parametros a ON a.Id_Param = pr.proMarca
-                   WHERE CONVERT(decimal,cliDocumento) = @cliDoc
+                   WHERE CONVERT(decimal,cliDocumento) = @cliDoc and (PresEstado= 613 or presestado = 682)
                    group by p.PresContratoNro, p.PresMontoSolicitado, p.PresPlan, p.PresPorcMensual, p.PresFecha, p.PresEntrega, p.PresFechaPrimeraCuota, p.PresDiadelMesCuota, 
 	               p.PresIntervaloCobranza, p.PresFecaud, p.PresUsuario, c.cliApellido, p.PresEstado, t.descripcionCorta, p.PresIdProducto,pr.proNombre, a.descripcion, pr.proId, p.PresNota
                    order by p.PresContratoNro Asc";

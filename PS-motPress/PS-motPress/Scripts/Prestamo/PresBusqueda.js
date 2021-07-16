@@ -242,7 +242,7 @@ function tomarCliente() {
                                 if ($.trim(estado) == 613) {
                                     icono = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="color:green" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d = "m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" /></svg>'
                                 }
-                                else if ($.trim(estado) == 668) {
+                                else if ($.trim(estado) == 682) {
                                     icono = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="color:red" class="bi bi-caret-right-fill" viewBox="0 0 16 16"><path d = "m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" /></svg>'
 
 
@@ -356,6 +356,7 @@ function visualCuotas() {
     var nroPrestamo;
     var tasa;
     var sist;
+    var estado;
     var a = document.querySelectorAll(".tomadaP");
     for (var b in a) { 
         var c = a[b];
@@ -409,6 +410,7 @@ function visualCuotas() {
                     $('#btnAccionAnular').attr("disabled", true);
                     $('#btnAccionFinalizar').attr("disabled", true);
                 }
+
 
 
                 var contador = 0;
@@ -465,13 +467,20 @@ function visualCuotas() {
 
                         //validar finalización del préstamo
 
-                        if (contador == 0) {
-                            $('#btnAccionFinalizar').attr("disabled", false);
-
-                        }
-                        else {
+                        if ($.trim(estado.textContent) == "Refinanciacion") {
+                            $('#btnAccionAnular').attr("disabled", true);
                             $('#btnAccionFinalizar').attr("disabled", true);
+                        }
+                        else if ($.trim(estado.textContent) == "Activo") {
+                            if (contador == 0) {
+                                $('#btnAccionFinalizar').attr("disabled", false);
+                                $('#btnAccionAnular').attr("disabled", true);
+                            }
+                            else {
+                                $('#btnAccionFinalizar').attr("disabled", true);
+                                $('#btnAccionAnular').attr("disabled", false);
 
+                            }
                         }
                        
                     }

@@ -60,6 +60,9 @@ $(document).ready(function () {
                 contentType: false,
                 success: function (data) {
                     var resultado = data;
+                    $('#btnEnviarDatos').css({ 'display': 'block' });
+                    $('#btnCancel').css({ 'display': 'block' });
+                    $('#msjCarga').css({ 'display': 'none' });
                     if ($.trim(resultado) == "Exito") {
                         Swal.fire({
                             icon: 'success',
@@ -68,9 +71,6 @@ $(document).ready(function () {
                             allowOutsideClick: false,
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                $('#btnEnviarDatos').css({ 'display': 'block' });
-                                $('#btnCancel').css({ 'display': 'block' });
-                                $('#msjCarga').css({ 'display': 'none' });
 
                                 window.location = "/Producto/ProBusqueda";
                             }
