@@ -1,0 +1,155 @@
+﻿body {
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #fefefe;
+    font-family: 'Century Gothic';
+}
+
+.a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.menu {
+    padding-left: 0px;
+}
+
+    .menu li ul {
+        padding-left: 0px;
+    }
+
+.btn-menu {
+    display: none;
+    /*padding: 10px;*/
+    background: #2E4E8C;
+    color: #fff;
+}
+
+    .btn-menu .icono {
+        float: right;
+    }
+
+    .btn-menu .iconoS {
+        float: right;
+    }
+
+    .btn-menu .iconoD {
+        float: right;
+    }
+
+.contenedor-menu {
+    width: 4%;
+    /*margin: 50px;*/
+    display: inline-block;
+    line-height: 18px;
+    overflow: hidden;
+    height: 100%;
+    background: #efe8e7;
+    position:fixed;
+}
+
+    .contenedor-menu .menu {
+        width: 100%;
+        list-style: none;
+    }
+
+.menu ul {
+    list-style: none;
+    text-decoration: none;
+}
+
+.contenedor-menu .menu li a {
+    color: #494949;
+    display: block;
+    padding: 15px 20px;
+    background: #efe8e7;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+    .contenedor-menu .menu li a:hover {
+        background: orange;
+        color: #fff;
+    }
+
+.contenedor-menu .menu .icono {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+    .contenedor-menu .menu .icono.izquierda {
+        float: left;
+        margin-right: 20px;
+    }
+
+    .contenedor-menu .menu .icono.derecha {
+        float: right;
+        margin-left: 10px;
+    }
+
+.contenedor-menu .menu ul {
+    display: none;
+}
+
+    .contenedor-menu .menu ul li a {
+        background: #cab9b9;
+        color: #151515;
+    }
+
+.contenedor-menu .menu .activado > a {
+    background: #ee9758;
+    color: #fff;
+}
+
+.cont {
+    margin-top: 0px;
+    margin-bottom: 6px;
+}
+
+#item-menu {
+    height: 100%;
+    /*background: white;*/
+}
+
+#menu-bar {
+    /*position:fixed;*/
+    top: 0;
+    left: 0;
+    /*background: white;*/
+}
+
+#header {
+    background: #e9e9e9;
+}
+
+.iconoContraido {
+    margin-bottom: 0px;
+    padding-bottom: 4px;
+    padding-top: 1px;
+}
+
+@media screen and (max-width: 450px) {
+    body {
+        padding-top: 80px;
+    }
+
+    .contenedor-menu {
+        margin: auto;
+        width: 100%;
+        /*position: fixed;*/
+        top: auto;
+        z-index: 1000;
+    }
+
+    .btn-menu {
+        display: block;
+    }
+
+    .contenedor-menu .menu {
+        display: none;
+    }
+
+    .menu-collapse {
+        display: none;
+    }
+}

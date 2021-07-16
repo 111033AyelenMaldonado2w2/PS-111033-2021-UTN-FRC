@@ -1,0 +1,177 @@
+﻿@model PS_motPress.Models.Usuario.ClsUsuario
+@{
+    ViewBag.Title = "UsuEditar";
+    List<SelectListItem> funci = (List<SelectListItem>)ViewBag.itemf;
+    List<SelectListItem> rol = (List<SelectListItem>)ViewBag.itemr;
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+    else
+    {
+        if (Session["rol"].Equals("Empleado"))
+        {
+            Response.Redirect("/Home/Index");
+        }
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm("UsuEditar", "Usuario", FormMethod.Post, new { id = "frm-editar", enctype = "multipart/form-data" }))
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2>
+                            <strong>
+                                Edición del Usuario - @Model.uApellido , @Model.uNombre <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                </svg>
+                            </strong>
+                        </h2><hr />
+                        <input name="uUsuario" value="@Model.uUsuario" hidden/>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-11">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Datos Personales</h5>
+                            </div>
+                            <div class="card-footer">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">Nombre</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.uNombre" id="uNombre" name="uNombre"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">Apellido</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.uApellido" name="uApellido" id="uApellido"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Documento</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.uDocumento" name="uDocumento" id="uDocumento"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">CUIT</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.uCUIT" name="uCUIT" id="uCUIT"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">Teléfono</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.uTel" name="uTel" id="uTel"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">Email</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.uEmail" name="uEmail" id="uEmail"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Información Laboral</h5>
+                            </div>
+                            <div class="card-footer">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">Rol</div>
+                                                        </div>
+                                                        @Html.DropDownList("uIdRol", rol, htmlAttributes: new { @class = "form-control", @name = "uIdRol", @id = "uIdRol"})
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:107px;">Funcion</div>
+                                                        </div>
+                                                        @Html.DropDownList("uIdFuncion", funci, htmlAttributes: new { @class = "form-control", @name = "uIdFuncion", @id = "uIdFuncion",})
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align: center">
+                                <button type="button" class="btn btn-warning btnNaranja" id="btnEnviarForm">Guardar Cambios</button>
+                                <button type="button" class="btn btn-dark" id="btnCerrar">Salir</button>
+                                <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Usuario/UsuEditar.js"></script>
+}

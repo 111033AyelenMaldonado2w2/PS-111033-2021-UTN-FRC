@@ -1,0 +1,259 @@
+﻿@model PS_motPress.Models.Producto.ClsProducto
+@{
+    ViewBag.Title = "ProEditar";
+    List<SelectListItem> item = (List<SelectListItem>)ViewBag.items;
+    List<SelectListItem> itemP = (List<SelectListItem>)ViewBag.itemsP;
+    List<SelectListItem> itemsM = (List<SelectListItem>)ViewBag.itemsM;
+    List<SelectListItem> itemsC = (List<SelectListItem>)ViewBag.itemsC;
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+@using (Html.BeginForm("editarProducto", "Producto", FormMethod.Post, new { id = "frm-editar", enctype = "multipart/form-data" }))
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Edición de Producto - @Model.pNombre</strong></h2><hr />
+                        <input hidden value="@Model.idProducto" name="idProducto" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10" style="text-align:center">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="data:image;base64,@System.Convert.ToBase64String(Model.pImage)" width="250" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-11">
+                        <div class="row">
+                            @*<div class="col-lg-1"></div>*@
+                            <div class="col-lg-5">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Marca</div>
+                                        </div>
+                                        @Html.DropDownList("pIdMarca", itemP, htmlAttributes: new { @class = "form-control", @name = "pIdMarca", @required = "required", @id = "marca" })
+                                        @*<select class="form-control" name="pIdMarca" required id="marca" autofocus="@Model.pIdMarca"></select>*@
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Nombre</div>
+                                        </div>
+                                        <input type="text" class="form-control" value="@Model.pNombre" id="producto" name="pNombre" required placeholder="Nombre">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Categoría</div>
+                                        </div>
+                                        @Html.DropDownList("pIdTipo", item, htmlAttributes: new { @class = "form-control", @name = "pIdTipo", @required = "required", @id = "tipo" })
+                                        @*<select class="form-control" name="pIdTipo" required id="tipo"></select>*@
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">Modelo/Año</div>
+                                        </div>
+                                        <input type="text" class="form-control" value="@Model.pModelo" id="anio" name="pModelo" required placeholder="Año">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;"><strong>Precio <label style="font-size:9px; margin-bottom:0px"> ARS</label></strong></div>
+                                        </div>
+                                        <input type="text" class="form-control" name="pPrecio" value="@Model.pPrecio" required id="precio" placeholder="Precio">
+                                    </div>
+                                </div>
+                            </div>
+                        </div><hr />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5>Ficha Técnica</h5>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Motor</div>
+                                        </div>
+                                        <textarea class="form-control" id="motor" name="pMotor" style="max-height: 100px; min-height: 38px; height: 38px;" aria-label="With textarea">@Model.pMotor</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Kilometraje</div>
+                                        </div>
+                                        <input type="text" class="form-control" value="@Model.pKilometros" name="pKilometros" required id="km" placeholder="Kilometraje">
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Combustible</div>
+                                        </div>
+                                        <input type="text" value="@Model.pCombustible" class="form-control" name="pCombustible" required id="combustible" placeholder="Combustible">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Cilindrada</div>
+                                        </div>
+                                        <input type="text" value="@Model.pCilindrada" class="form-control" name="pCilindrada" required id="cilindro" placeholder="Cilindrada">
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Arranque</div>
+                                        </div>
+                                        <input type="text" value="@Model.pArranque" class="form-control" name="pArranque" required id="arranque" placeholder="Arranque">
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text"  style="width:113px;">Caja</div>
+                                        </div>
+                                        @Html.DropDownList("pIdCaja", itemsM, htmlAttributes: new { @class = "form-control", @name = "pIdCaja", @required = "required", @id = "caja" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div><hr />
+                              <div class="row">
+                                  <div class="col-lg-5">
+                                      <div class="col-auto">
+                                          <div class="input-group mb-2">
+                                              <div class="input-group-prepend">
+                                                  <div class="input-group-text"  style="width:113px;">Color</div>
+                                              </div>
+                                              @Html.DropDownList("pIdColor", itemsC, htmlAttributes: new { @class = "form-control", @name = "pIdColor", @required = "required", @id = "color" })
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12">
+                                      <div class="col-auto">
+                                          <div class="input-group">
+                                              <div class="input-group-prepend">
+                                                  <span class="input-group-text"  style="width:113px;">Descripción</span>
+                                              </div>
+                                              <textarea class="form-control" id="descrp" name="pDescripcion" style="max-height: 100px; min-height: 38px; height: 38px;" aria-label="With textarea">@Model.pDescripcion</textarea>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <br />
+                              </div>
+                        <br /><br />
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h5>Imagenes</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-auto">
+                                    <div class="card" style="width: 18rem;  text-align: center">
+                                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.pRuta)" width="200" />
+                                        <div class="card-header">
+                                            <h5 class="card-title">
+                                                Imagen Miniatura <button type="button" class="botonesImg1 btn btn-outline-dark">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="card-body archivosVer1" hidden>
+                                            <div class="input-group mb-3">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" name="ImgMiniatura" aria-describedby="inputGroupFileAddon01">
+                                                    <label class="custom-file-label" for="inputGroupFile01">Elegir</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-auto">
+                                    <div class="card" style="width: 18rem; text-align: center">
+                                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.pImage)" width="200" />
+                                        <div class="card-header">
+                                            <h5 class="card-title">
+                                                Imagen Grande <button type="button" class="botonesImg btn btn-outline-dark">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                    </svg>
+                                                </button>
+                                            </h5>
+                                        </div>
+                                        <div class="card-body archivosVer" hidden>
+                                            <div class="input-group mb-3">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" name="ImgFile" aria-describedby="inputGroupFileAddon01">
+                                                    <label class="custom-file-label" for="inputGroupFile01">Elegir</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><hr /><br />
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align:center">
+                                <button class="btn btn-dark btnNegro" type="button" id="btnCancel" style="display:block; float:right" onclick="prueba();">Cancelar</button>
+                                <button type="button" id="btnEnviarDatos" class="btn btn-warning btnNaranja" style="display:block; float:right; margin-right:15px;">Guardar Cambios</button>
+        <button class="btn btn-warning btnNaranjaClaro" style="display:none; float:right" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+    <script src="~/Scripts/Producto/ProEditar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+}
+

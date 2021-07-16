@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewBag.Title = "Simulador";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Simulador de Préstamos</strong></h2><hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 style="font-weight:normal">Datos de la Simulación</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="form-inline">
+                                    <label for="validationCustom01">Moto</label>
+                                    <input style="min-width: 100%" name="pMoto" id="moto" required class="form-control" disabled>
+                                    <input name="pIdMoto" id="motoID" hidden>
+                                </div>
+                            </div>
+                            <div class="col-lg-1" style="padding:0px; top:22px">
+                                <button type="button" class="btn btn-warning btnNaranjaClaro" data-toggle="modal" data-target="#buscarMoto">+</button>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="col-auto" style="padding:0px;">
+                                    <label for="validationCustom01">Valor de la moto</label>
+                                    <input style="min-width: 100%; text-align:right"  disabled id="precioMoto" min="1" placeholder="Sólo números" class="form-control monto" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="col-auto" style="padding:0px;">
+                                    <label for="validationCustom01">Entrega</label>
+                                    <input style="min-width: 100%; text-align:right" value="0" onkeyup="valorArefian();"  min="1" placeholder="Sólo números" id="entregaDinero" name="pEntrega" class="form-control" required>
+                                </div>
+                            </div>
+                        </div><br />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label>Monto a Simular</label>
+                                <input style="min-width: 100%; text-align:right"  min="1" id="montoSimular" placeholder="Sólo números" class="form-control monto" required>
+                            </div>
+                            <div class="col-lg-3">
+                                <label>Porcentaje de Interés</label>
+                                <input style="min-width: 100%; text-align:right" type="number" min="1" id="interesSimular" placeholder="Sólo números" class="form-control" required>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>Plan de Cuotas</label>
+                                <input style="min-width: 100%; text-align:right" type="number" min="1" id="planSimular" placeholder="Números" class="form-control" required>
+                            </div>
+                            <div class="col-lg-2" style="display: flex; align-items: center; bottom: 0;">
+                                <button type="button" style="margin-top:23px;" id="cargarTablaSimulacíon" class="btn btn-warning btnNaranja">Calcular</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div id="prestamo" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="font-weight:normal">Composición del Préstamo</h4>
+                        </div>
+                    </div>
+                    <table id="tablaPrestamo" class="table table-bordered"></table>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 style="font-weight:normal">Resumen de la Información</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-3">
+                                    <label>Monto Financiado</label>
+                                    <input style="min-width: 100%;  text-align:right" id="montoFinanciar" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Precio Moto</label>
+                                    <input style="min-width: 100%;  text-align:right" id="precio" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Monto Entregado</label>
+                                    <input style="min-width: 100%;" id="jj" disabled class="form-control">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-3">
+                                    <label>Interés Total</label>
+                                    <input style="min-width: 100%; text-align:right" id="interesTotal" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Plan de Cuotas </label>
+                                    <input style="min-width: 100%; text-align:right" id="planCtas" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Valor de la Cuota</label>
+                                    <input style="min-width: 100%; text-align:right; background: #f6c380" id="cuotaFinal" disabled class="form-control">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-3">
+                                    <label>Modelo</label>
+                                    <input style="min-width: 100%;" id="motoElegida" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Marca</label>
+                                    <input style="min-width: 100%;" id="marcaMoto" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Año</label>
+                                    <input style="min-width: 100%;" id="anioMoto" disabled class="form-control">
+                                </div>
+                                <div class="col-lg-3">
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-1"></div>
+                                <div class="col-lg-5">
+                                    <label>Nombre del Solicitante</label>
+                                    <input style="min-width: 100%;" id="nombreSolic" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button class="btn btn-warning btnNaranjaClaro" style="float:right; margin-right:10px;" type="button" onclick="salir();">Nuevo</button>
+                                    <button class="btn btn-dark btnNegro" style="float:right; margin-right:10px;" id="btnImprimir" type="button">Imprimir</button>
+                                    <button class="btn btn-warning btnNaranja" type="button" style="float:right; margin-right:10px;" id="btnGuararSimulacion">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.0.28/jspdf.plugin.autotable.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Simulador/Simulador.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.14/dist/jspdf.plugin.autotable.js"></script>
+}
+
+    <div class="modal fade" id="buscarMoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Búsqueda de Moto</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6" style="padding-left: 0px; display:flex;align-items: center;justify-content: center;">
+                            <div class="form-group">
+                                <label>Ingrese el nombre del modelo</label>
+                                @Html.TextBox("parametro", "", htmlAttributes: new { @class = "form-control", @id = "motocicleta", required = "required" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style=" display:flex;align-items: center;justify-content: center;">
+                            <input type="button" value="Buscar" id="btnBuscaMoto" class="btn btn-warning btnNaranjaClaro" />
+                            <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga3" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped" id="CargartablaMoto" style="text-align:center"></table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

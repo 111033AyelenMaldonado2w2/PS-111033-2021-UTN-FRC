@@ -1,0 +1,269 @@
+﻿@model PS_motPress.Models.Cliente.ClsCliente
+@{
+    ViewBag.Title = "CliEditar";
+    List<SelectListItem> itemP = (List<SelectListItem>)ViewBag.itemsP;
+    List<SelectListItem> itemPr = (List<SelectListItem>)ViewBag.itemsPr;
+    List<SelectListItem> itemL = (List<SelectListItem>)ViewBag.itemsL;
+    List<SelectListItem> itemB = (List<SelectListItem>)ViewBag.itemsB;
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm("editarCliente", "Cliente", FormMethod.Post, new { id = "frm-editar", enctype = "multipart/form-data" }))
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Edición del Cliente - @Model.cApellido, @Model.cNombre <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                                          </svg></strong></h2><hr />
+                        <input hidden value="@Model.cCliId" name="cCliId" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-11">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Datos Personales</h5>
+                            </div>
+                            <div class="card-footer">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Nombre</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cNombre" name="cNombre" onkeyup="validarSintaxis()" id="nom" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Apellido</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cApellido" name="cApellido" onkeyup="validarSintaxis()" id="ape" required/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Documento</div>
+                                                        </div>
+                                                        <input class="form-control input-number" value="@Model.cDocumento" name="cDocumento" id="doc" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >CUIT</div>
+                                                        </div>
+                                                        <input class="form-control input-number" value="@Model.cCUIT" name="cCUIT" id="cuit" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Teléfono</div>
+                                                        </div>
+                                                        <input class="form-control input-number" value="@Model.cTel" id="minTEL" name="cTel" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Email</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cEmail" id="correp" name="cEmail" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Nacimiento</div>
+                                                        </div>
+                                                        <input type="date" class="form-control" value="@Model.nacimiento" id="birthDate" name="cFechaNacimiento" required />
+                                                    </div>
+                                                </div>
+                                            </div>                        
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Información de Locación</h5>
+                            </div>
+                            <div class="card-footer">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >País</div>
+                                                        </div>
+                                                        @Html.DropDownList("cIdPais", itemP, htmlAttributes: new { @class = "form-control", @name= "cIdPais", @required= "required", @id= "pais" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Localidad</div>
+                                                        </div>
+                                                        @Html.DropDownList("cIdLocalidad", itemL, htmlAttributes: new { @class = "form-control", @name= "cIdLocalidad", @required = "required", @id= "location" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Provincia</div>
+                                                        </div>
+                                                        @Html.DropDownList("cIdProvincia", itemPr, htmlAttributes: new { @class = "form-control", @name= "cIdProvincia", @required = "required", @id= "provincia" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Barrio</div>
+                                                        </div>
+                                                        @Html.DropDownList("cIdBarrio", itemB, htmlAttributes: new { @class = "form-control", @name= "cIdBarrio", @required = "required", @id= "barrio" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Calle</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cCalle" name="cCalle" onkeyup="validarSintaxis()" id="cal" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Altura</div>
+                                                        </div>
+                                                        <input class="form-control input-number" value="@Model.cAltura" name="cAltura" id="alt" required/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Piso</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cPiso" name="cPiso" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text" style="width:121px;" >Nro Dpto</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cNroDpto" name="cNroDpto" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <div class="col-auto">
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Codigo Postal</div>
+                                                        </div>
+                                                        <input class="form-control" value="@Model.cCodPostal" id="cp" name="cCodPostal" required/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align: center">
+                                <button type="button" id="btnMandar" class="btn btn-warning btnNaranja" style="display:normal">Guardar Cambios</button>
+                                <button type="button" id="btnClose" style="display:normal" class="btn btn-dark btnNegro">Cancelar</button>
+                                <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/Cliente/CliEditar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+}

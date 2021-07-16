@@ -1,0 +1,342 @@
+﻿
+@{
+    ViewBag.Title = "PresAlta";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<link rel="stylesheet" href="~/Content/aumetoImg.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm("confirPrestamo", "Prestamo", FormMethod.Post, new { id = "frm-enviar", enctype = "multipart/form-data" }))
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Liquidación de Préstamos</strong></h2><hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="card">
+                    @*<button type="button" onclick="imprimirContrato();">prueba</button>*@
+                    <div class="card-header" style="margin-bottom:0px;">
+                        <h5 style="font-weight:normal">Datos Solicitante</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <h5 style="font-weight:normal">Documento *</h5>
+                            </div>
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input type="text" class="form-control" id="docu" placeholder="Sólo números" disabled>
+                            </div>
+                            <button type="button" data-toggle="modal" data-target="#modalCLiente" class="btn btn-warning btnNaranjaClaro mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </button>
+                        </div><br />
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Nombre</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Denominación" disabled id="txtDenominacion" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Telefono</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Contacto" disabled id="txtTel" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Nro Crédito</span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Número Crédito" disabled id="credito" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <input hidden id="idCli" name="pClidId" />
+                            <input hidden id="nroC" name="pNroContrato" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="card">
+                    <div class="card-header" style="margin-bottom:0px;">
+                        <h5 style="font-weight:normal">Datos del Préstamo</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="usar">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="form-inline">
+                                        <label for="validationCustom01">Moto *</label>
+                                        <input style="min-width: 100%" name="pMoto" id="moto" required class="form-control" disabled>
+                                        <input name="pIdMoto" id="motoID" hidden>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1" style="padding:0px; top:22px">
+                                    <button type="button" class="btn btn-warning btnNaranjaClaro" data-toggle="modal" data-target="#buscarMoto">+</button>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Valor de la moto</label>
+                                        <input style="min-width: 100%; text-align:right" disabled  id="precioMoto" min="1" placeholder="Sólo números" class="form-control monto" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Entrega</label>
+                                        <input style="min-width: 100%; text-align:right"  value="0" onclick="valorArefian();" onkeyup="valorArefian();" min="0" placeholder="Sólo números" id="entregaDinero" name="pEntrega" class="form-control">
+                                    </div>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Importe a Refinanciar *</label>
+                                        <input style="min-width: 100%; text-align:right"  min="1" id="montoFinal" placeholder="Sólo números" name="pMontoSolicitado" class="form-control monto" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Fecha del Crédito *</label>
+                                        <input style="min-width: 100%" type="date" id="entrega" name="pFechaContrato" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Plan *</label>
+                                        <input style="min-width: 100%" type="number" id="cant"  min="1" name="pPlan" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2" style="padding:0px;">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Día Vencimiento *</label>
+                                        <input style="max-width: 60%" type="number" name="pDiaVencimiento" max="31" min="1" id="dia" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Tipo Vencimiento *</label>
+                                        <select id="tipoVenc" class="form-control" name="pTipoCobro" required></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Tasa Mensual *</label>
+                                        <input style="min-width: 100%" id="porce" min="0" name="pInteres" type="number" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="col-auto" style="padding:0px;">
+                                        <label for="validationCustom01">Fecha 1era Cuota *</label>
+                                        <input style="min-width: 100%" type="date" name="pFechaPrimeraCuota" id="primera" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-10"></div>
+                                <div class="col-lg-2" style="top:22px;">
+                                    <button class="btn btn-warning btnNaranja btnCargaTable" style="float: right" type="button" id="btnCargaTable">
+                                        Calcular <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator-fill" viewBox="0 0 16 16">
+                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2 .5v2a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5zm0 4v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM4.5 9a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 12.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zM7.5 6a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM7 9.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM10 6.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm.5 2.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-.5-.5h-1z" />
+                                        </svg>
+                                    </button>
+                                    <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
+
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <table class="table table-bordered" id="tablaConPrestamo"></table>
+                    </div>
+                    <div class="col-lg-4" style="display:none" id="infoInferior">
+                        <h5>Información</h5><br />
+                        <div class="card">
+                            <div class="card-body">
+                                <label>Capital</label>
+                                <input disabled class="form-control" style="text-align:right" id="cap" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-body">
+                                <label>Interés</label>
+                                <input disabled class="form-control" style="text-align:right" id="intF" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-body">
+                                <label>Importe Financiado</label>
+                                <input disabled class="form-control" style="text-align:right" id="capF" />
+                            </div>
+                        </div><br />
+                        <div class="card">
+                            <div class="card-body">
+                                <label><strong>Valor de la Cuota</strong></label>
+                                <input disabled class="form-control" style="text-align:right" id="totalCuota" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row" id="botones" style="display: none">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11" style="text-align: center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Observaciones</h5>
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-10">
+                                <textarea style="min-width:100%;" id="pNotas" name="pNotas" maxlength="500" rows="4" class="form-control"></textarea>
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="card">
+                    <div class="card-body">
+                        <input class="btn btn-warning btnNaranja btnConfirmacion" id="btnConfirmacion" value="Confirmar Crédito" type="button" />
+                        <input class="btn btn-danger" id="btnCancel" type="button" style="width:152px;" value="Cancelar" />
+                        <button class="btn btn-danger" style="display:none;" id="msjCargando" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.14/dist/jspdf.plugin.autotable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Prestamo/PresAlta.js"></script>
+}
+<div class="modal fade" id="modalCLiente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Búsqueda de Cliente</h3>
+                <button type="button" onclick="cerrar();" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form runat="server" action="post">
+                    <asp:ScriptManager runat="server">
+                        <Scripts>
+                            <asp:ScriptReference Name="jquery" />
+                            <asp:ScriptReference Name="jquery.ui.combined" />
+                        </Scripts>
+                    </asp:ScriptManager>
+                    <div class="row">
+                        <div class="col-lg-5" style="padding-right:0px;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="txtEsNombre" value="option1" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Denominación
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="txtEsDoc" value="option2">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Documento
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" style="padding-left: 0px; display:flex;align-items: center;justify-content: center;">
+                            @Html.TextBox("parametro", "", htmlAttributes: new { @class = "form-control", @id = "palabra", required = "required" })
+                        </div>
+                        <div class="col-lg-3" style=" display:flex;align-items: center;justify-content: center;">
+                            <input type="button" value="Buscar" id="btnSubir" class="btn btn-warning btnNaranjaClaro btnSubir" />
+                            <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga2" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div style="text-align:center">
+                    <button class="btn btn-warning"><a style="text-decoration: none; color: black" href="@Url.Action("CliAlta","Cliente")">Nuevo Cliente</a></button><br />
+                </div>
+
+                <br /><br />
+                <div id="posteo">
+                    <table class="table table-bordered table-striped" id="Cargartabla" style="text-align:center"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="buscarMoto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Búsqueda de Moto</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6" style="padding-left: 0px; display:flex;align-items: center;justify-content: center;">
+                        <div class="form-group">
+                            <label>Ingrese el nombre del modelo</label>
+                            @Html.TextBox("parametro", "", htmlAttributes: new { @class = "form-control", @id = "motocicleta", required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-lg-4" style=" display:flex;align-items: center;justify-content: center;">
+                        <input type="button" value="Buscar" id="btnBuscaMoto" class="btn btn-warning btnNaranjaClaro" />
+                        <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga3" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                    </div>
+                </div><br />
+                <table class="table table-bordered table-striped" id="CargartablaMoto" style="text-align:center"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

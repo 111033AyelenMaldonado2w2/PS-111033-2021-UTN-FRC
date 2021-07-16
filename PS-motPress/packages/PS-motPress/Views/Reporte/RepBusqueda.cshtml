@@ -1,0 +1,661 @@
+﻿
+@{
+    ViewBag.Title = "RepBusqueda";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+    else
+    {
+        if(Session["rol"].Equals("Empleado"))
+        {
+            Response.Redirect("/Home/Index");
+        }
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2>
+                            <strong>
+                                Reportes
+                            </strong>
+                        </h2><hr />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-11">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <a class="navbar-brand" href="~/Reporte/RepBusqueda">Menú</a>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Clientes
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" id="listadoClientes">Listado de Clientes</a>
+                                            <a class="dropdown-item" id="historialCli">Historial cliente</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Préstamos
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" id="simPrestamo">Simulación de Préstamo</a>
+                                            <a class="dropdown-item" id="presActivos">Préstamos activos</a>
+                                            <a class="dropdown-item" id="prestamosDados">Préstamos otorgados</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Cobranza
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" id="cobroXdia">Cobranza del día</a>
+                                            <a class="dropdown-item" id="cobroMens">Cobranza mensual</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Cuotas
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" id="moraMas30">Cuotas en Mora + 30 Días</a>
+                                            <a class="dropdown-item" id="todasVencidas">Cuotas vencidas</a>
+                                            <a class="dropdown-item" id="VencEnDia">Vencimiento en el día</a>
+                                            <a class="dropdown-item" id="VencRango">Vencimiento por rango</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <br />
+                        @*<button type="button" id="pruebaImp" style="display:none">Print</button>*@
+                        <div style="height:100%" id="central">
+                            <div style="text-align: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top:50px;" width="50" height="50" fill="currentColor" class="bi bi-clipboard-data" viewBox="0 0 16 16">
+                                    <path d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="card" style="display:none" id="marco">
+                            <div class="card-body">
+                                <div class="form-inline">
+                                    <div id="titulo"></div>
+                                    <button type="button" id="pruebaImp" style="float:right; display:none; margin-left:750px; " class="btn btn-warning btnNaranjaClaro">Imprimir</button>
+                                </div>
+
+                                <div id="tarjetaParaBusqCli" style="display:none">
+                                    <br />
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Selección de Cliente
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Documento</label>
+                                                    <input class="form-control input-number" disabled style="margin-left:10px;" id="docume" type="number" />
+                                                    <input type="text" class="form-control" id="idCli" hidden>
+                                                </div>
+                                                <button type="button" data-toggle="modal" style="margin-top:8px;margin-left:10px;" data-target="#modalCLiente" class="btn btn-warning btnNaranjaClaro mb-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre</label>
+                                                        <input class="form-control" id="nombre" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Apellido</label>
+                                                        <input class="form-control" id="apellido" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>CUIT</label>
+                                                        <input class="form-control input-number" id="cuit" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Teléfono</label>
+                                                        <input class="form-control" id="telef" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Correo</label>
+                                                        <input class="form-control" id="mail" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div id="tarjetaParaSimulacion" style="display:none">
+                                    <br />
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Simulación
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Cliente</label>
+                                                    <input class="form-control" disabled style="margin-left:10px;" id="nombreSim" />
+                                                    <input type="text" class="form-control" id="idSilumacion" hidden>
+                                                </div>
+                                                <button type="button" data-toggle="modal" style="margin-top:8px;margin-left:10px;" data-target="#exampleModalSimulacion" class="btn btn-warning btnNaranjaClaro mb-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="card" id="datosSimulacion" style="display:none">
+                                        <div class="card-header" style="margin-bottom:0px;">
+                                            Datos de Simulacion
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Monto Solicitado</label>
+                                                        <input class="form-control" id="montoS" style="text-align:right" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Plan de Cuotas</label>
+                                                        <input class="form-control" id="plazoS" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Interés % </label>
+                                                        <input class="form-control" id="interesS" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label><strong>Valor de la Cuota</strong></label>
+                                                        <input class="form-control" id="valorCuoS" style="text-align:right" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="TrajetaParaFecha" style="display:none">
+                                    <br />
+                                    <div class="card">
+                                        <div class="card-header" style="margin-bottom:0px;">
+                                            Fecha
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Seleccionar Fecha</label>
+                                                    <input style="margin-left:10px;" type="date" class="form-control" id="idFecha" placeholder="Codigo" aria-describedby="basic-addon1">
+                                                </div>
+                                                <button type="button" onclick="reporteConFecha();" style="margin-top:8px; margin-left:10px;" class="btn btn-warning btnNaranjaClaro mb-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="TrajetaParaBusquedaXanio" style="display:none">
+                                    <br />
+                                    <div class="card">
+                                        <div class="card-header" style="margin-bottom:0px;">
+                                            Búsqueda por año
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Seleccionar Año</label>
+                                                    <select style="margin-left:15px; min-width:200px;" id="añosPrestamos" class="form-control"></select>
+                                                </div>
+                                                <button type="button" onclick="reporteConAnio();" style="margin-top:8px; margin-left:10px;" class="btn btn-warning btnNaranjaClaro mb-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="TrajetaParaCobroXmes" style="display:none">
+                                    <br />
+                                    <div class="card">
+                                        <div class="card-header" style="margin-bottom:0px;">
+                                            Búsqueda por mes
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label>Seleccionar Mes</label>
+                                                    <select style="margin-left:15px; min-width:200px;" id="mesesC" class="form-control">
+                                                        <option value="">Seleccionar...</option>
+                                                        <option value="1">Enero</option>
+                                                        <option value="2">Febrero</option>
+                                                        <option value="3">Marzo</option>
+                                                        <option value="4">Abril</option>
+                                                        <option value="5">Mayo</option>
+                                                        <option value="6">Junio</option>
+                                                        <option value="7">Julio</option>
+                                                        <option value="8">Agosto</option>
+                                                        <option value="9">Septiembre</option>
+                                                        <option value="10">Octubre</option>
+                                                        <option value="11">Noviembre</option>
+                                                        <option value="12">Diciembre</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group" style="margin-left:10px;">
+                                                    <label>Seleccionar Año</label>
+                                                    <select style="margin-left:15px; min-width:200px;" id="añosCuotas" class="form-control"></select>
+                                                </div>
+                                                <button type="button" onclick="reporteCobroMes();" style="margin-top:8px; margin-left:10px;" class="btn btn-warning btnNaranjaClaro mb-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="TrajetaParaFechaDoble" style="display:none">
+                                    <br />
+                                    <div class="card">
+                                        <div class="card-header" style="margin-bottom:0px;">
+                                            Rango
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <div class="form-inline">
+                                                        <div class="form-group">
+                                                            <label>Seleccionar fecha inicial</label>
+                                                            <input style="margin-left:10px;" type="date" class="form-control" id="idFechaIni" aria-describedby="basic-addon1">
+                                                        </div>
+                                                        <div class="form-group" style="padding-left:20px;">
+                                                            <label>Seleccionar fecha final</label>
+                                                            <input style="margin-left:10px;" type="date" class="form-control" id="idFechaFin" aria-describedby="basic-addon1">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" onclick="reporteConFechaDoble();" style="margin-top:8px; margin-left:10px;" class="btn btn-warning btnNaranjaClaro mb-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="repeticionesReporte" style="display:none">
+                                    <div id="tablaRepe">
+
+                                    </div>
+                                    <br />
+                                    <div class="card" id="repDiarioCobro" style="display:none">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label>Cantidad de cobros realizados en el día: </label>
+                                                    <input disabled class="sinborde" style="padding-left:10px;" id="cantTotDia" />
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label>Monto total cobrado en el día: </label>
+                                                    <input disabled class="sinborde" style="padding-left:10px;" id="montoTotDia" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" id="repDiarioPOtort" style="display:none">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label>Cantidad de préstamos otrogados en el día: </label>
+                                                    <input disabled class="sinborde" style="padding-left:10px;" id="cantTotPrest" />
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label>Monto total entregado en el día: </label>
+                                                    <input disabled class="sinborde" style="padding-left:10px;" id="montoTotPrest" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tituloTablaPrestamos" style="display:none">
+                                    <h6>Préstamos pertenecientes al Cliente</h6>
+                                </div>
+                                <table id="tablaPrestamos" class="table table-bordered"></table>
+                                <br />
+                                <div id="tituloTablaCuotas" style="display:none">
+                                    <h6>Cuotas pertenecientes al Préstamo</h6>
+                                </div>
+                                <table id="tablaReporte" class="table table-bordered"></table>
+                                <div>
+                                    <div class="card" id="infoPrestamAct" style="display:none">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label>Cantidad de Préstamos activos: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="cantPrest" />
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label>Monto total entregado: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="cantTotalEntreg" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" id="infoSimula" style="display:none">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label>Fecha estimada de inicio: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="festSimIni" />
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label>Fecha estimada de finalización: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="festSimFin" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" id="infocuotVenc" style="display:none">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label>Cantidad de cuotas vencidas: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="cantCtasVenc" />
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label>Monto deuda: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="cantdeuda" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card" id="infoListaClit" style="display:none">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <div class="form-inline">
+                                                    <label>Cantidad de clientes activos: </label>
+                                                    <input class="sinborde" style="padding-left:10px;" disabled id="cantcliA" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card" id="repMesCobro" style="display:none">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="form-inline">
+                                                <label>Cantidad de cobros realizados en el mes: </label>
+                                                <input disabled class="sinborde" style="padding-left:10px;" id="cantTotMes" />
+                                            </div>
+                                            <div class="form-inline">
+                                                <label>Monto total cobrado en el mes: </label>
+                                                <input disabled class="sinborde" style="padding-left:10px;" id="montoTotMes" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="graficoCobro" style="display: none">
+                                    <br />
+                                    <div class="card">
+                                        <h4>Ingresos diarios del mes</h4>
+                                        <div id="crearGrafico">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="graficosMuestra" style="display:none">
+                                    <br />
+                                    <h4>Cantidad de préstamos por mes</h4>
+                                    <canvas id="prestamosCantidad"></canvas>
+                                    <br />
+                                    <h4>Monto entregado por mes</h4>
+                                    <canvas id="prestamosEntrega"></canvas>
+                                </div>
+                                <table id="tablaConCuotas" class="table table-bordered"></table>
+                                <div id="datosPrestamo" style="display:none">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>Información relevante al Préstamo</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="form-group" style="margin-bottom: 10px;">
+                                                        <label>Nro Préstamo</label>
+                                                        <input class="form-control" id="nroContrato" disabled />
+                                                        <input class="form-control" id="deudaTotal" hidden />
+                                                        <input class="form-control" id="deudaSaldada" hidden />
+                                                        <input class="form-control" id="deudaFinal" hidden />
+                                                        <input class="form-control" id="concesion" hidden />
+                                                        <input class="form-control" id="fechaFin" hidden />
+                                                        <input class="form-control" id="estdPres" hidden />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Importe Préstamo</label>
+                                                        <input class="form-control" id="impoPrestamo" style="text-align:right" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Nro Cuotas</label>
+                                                        <input class="form-control" id="cantCuotas" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Tipo Vencimiento</label>
+                                                        <input class="form-control" id="tipoVenc" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Tasa</label>
+                                                        <input class="form-control" id="porcTasa" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Importe Cobrado</label>
+                                                        <input class="form-control" style="text-align:right" id="loCobrado" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Cant. Cuotas cobradas</label>
+                                                        <input class="form-control" id="cantCuotasCob" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3"></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Moto</label>
+                                                        <input class="form-control" id="nombreMoto" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Marca</label>
+                                                        <input class="form-control" id="marcaMoto" disabled />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label>Seña Entregada</label>
+                                                        <input class="form-control" id="seniaEntregada" style="text-align:right" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <div class="form-group">
+                                                        <label>Observaciones</label>
+                                                        <textarea style="min-width:100%" class="form-control" rows="2" id="nota" disabled></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <button type="button" id="pruebaImp1" style="float:right; display:none; margin-left:800px; " class="btn btn-warning btnNaranjaClaro">Imprimir</button>
+
+                                <div class="row" id="paraImpresion">
+                                    <div class="col-lg-10"></div>
+                                    <div class="col-lg-12" style="display:none" id="botonImpresora">
+                                        <input type="button" style="float:right" id="btnImprimir" class="btn btn-warning btnNaranjaClaro" value="Imprimir" />
+                                        @*<button type="button" id="btnImprimir" hidden class="btn btn-primary">Imprimir</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>*@
+    <script src="~/Scripts/Reporte/RepBusqueda.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.5.14/dist/jspdf.plugin.autotable.js"></script>
+
+}
+
+<div class="modal fade" id="modalCLiente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Búsqueda de Cliente</h3>
+                <button type="button" onclick="cerrar();" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form runat="server" action="post">
+                    <asp:ScriptManager runat="server">
+                        <Scripts>
+                            <asp:ScriptReference Name="jquery" />
+                            <asp:ScriptReference Name="jquery.ui.combined" />
+                        </Scripts>
+                    </asp:ScriptManager>
+                    <div class="row">
+                        <div class="col-lg-5" style="padding-right:0px;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="txtEsNombre" value="option1" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    Denominación
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="txtEsDoc" value="option2">
+                                <label class="form-check-label" for="exampleRadios2">
+                                    Documento
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4" style="padding-left: 0px; display:flex;align-items: center;justify-content: center;">
+                            @Html.TextBox("parametro", "", htmlAttributes: new { @class = "form-control", @id = "palabra", required = "required" })
+                        </div>
+                        <div class="col-lg-3" style=" display:flex;align-items: center;justify-content: center;">
+                            <input type="button" value="Buscar" id="btnSubir" class="btn btn-warning btnNaranjaClaro btnSubir" />
+                        </div>
+                    </div>
+                </form>
+                @*<br />*@
+                @*<div style="text-align:center">
+                        <button class="btn btn-warning"><a style="text-decoration: none; color: black" href="@Url.Action("CliAlta","Cliente")">Nuevo Cliente</a></button><br />
+                    </div>*@
+
+                <br /><br />
+                <div id="posteo">
+                    <table class="table table-bordered table-striped" id="Cargartabla" style="text-align:center"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModalSimulacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Busqueda de Simulación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3" style="text-align:right">
+                        <label>Nombre Cliente</label>
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.TextBox("parametro", "", htmlAttributes: new { @class = "form-control", @id = "palabraS", required = "required" })
+                    </div>
+                    <div class="col-lg-3">
+                        <a>
+                            <input type="button" value="Buscar" id="btnBuscar" class="btn btn-warning btnNaranjaClaro" />
+                        </a>
+                    </div>
+                </div>
+                <br /><br />
+                <table class="table table-bordered table-striped" id="CargartablaS" style="text-align:center"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btnNegro" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

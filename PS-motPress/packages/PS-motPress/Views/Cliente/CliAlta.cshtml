@@ -1,0 +1,276 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "CliAlta";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+@using (Html.BeginForm("nuevoCliente", "Cliente", FormMethod.Post, new { id = "frm-alta", enctype = "multipart/form-data" }))
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <h4>Registro de Cliente</h4><hr />
+                <form class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Datos Personales</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <h6 style="float: right">Nombre *</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control" placeholder="Primer Nombre" name="cNombre" id="nomb" onkeyup="validarSintaxis()"  required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <h6 style="float: right">Documento *</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control input-number" name="cDocumento"type="number" id="maxDoc" required placeholder="Sólo números"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <h6 style="float: right">Teléfono *</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control input-number" name="cTel" id="minTEL" type="number" placeholder="Sólo números" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <h6 style="float: right">Nacimiento *</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control" name="cFechaNacimiento" id="birthDate" type="date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <h6 style="float: right">Apellido *</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control" placeholder="Apellido" name="cApellido" id="lastName" onkeyup="validarSintaxis()" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <h6 style="float: right">CUIT/CUIL *</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control input-number" name="cCUIT" required type="number" id="maxCuit" placeholder="Sólo números"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <h6 style="float: right">Email</h6>
+                                                    </div>
+                                                    <div class="col-lg-7">
+                                                        <input class="form-control" type="email" name="cEmail" id="correp" placeholder="Correo Electrónico"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Información de Locación</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <h6 style="float: right">País *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <select class="form-control" id="pais" name="cIdPais"></select>
+                                                </div>
+                                                <div class="col-lg-1" style="padding-left: 0px">
+                                                    <button class="btn btn-outline-warning btn-sm btnNaranjaClaro" type="button" id="acPais" data-toggle="modal" data-target="#locationNueva">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <h6 style="float: right">Provincia *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <select class="form-control" id="provincia" name="cIdProvincia"></select>
+                                                </div>
+                                                <div class="col-lg-1" style="padding-left: 0px">
+                                                    <button class="btn btn-outline-warning btn-sm btnNaranjaClaro" type="button" id="acProvincia" data-toggle="modal" data-target="#locationNueva">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <h6 style="float: right">Localidad *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <select class="form-control" id="location" name="cIdLocalidad"></select>
+                                                </div>
+                                                <div class="col-lg-1" style="padding-left: 0px">
+                                                    <button class="btn btn-outline-warning btnNaranjaClaro btn-sm" type="button" id="acLocalidad" data-toggle="modal" data-target="#locationNueva">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <h6 style="float: right">Barrio *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <select class="form-control" id="barrio" name="cIdBarrio"></select>
+                                                </div>
+                                                <div class="col-lg-1" style="padding-left: 0px">
+                                                    <button class="btn btn-outline-warning btnNaranjaClaro btn-sm" type="button" id="acBarrio" data-toggle="modal" data-target="#locationNueva">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h6 style="float: right">Calle *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input class="form-control" name="cCalle" id="calle" onkeyup="validarSintaxis()" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h6 style="float: right">Altura *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input class="form-control input-number" name="cAltura" id="alt" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h6 style="float: right">Cod.Postal *</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input class="form-control" name="cCodPostal" id="cp" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h6 style="float: right">Piso</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input class="form-control" name="cPiso" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <h6 style="float: right">Nro Dpto</h6>
+                                                </div>
+                                                <div class="col-lg-7">
+                                                    <input class="form-control" name="cNroDpto" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-header" style="text-align: center" id="btnConfirm">
+                                <button class="btn btn-warning btnNaranja" style="margin-right:10px;display:normal" type="button" id="enviarForm">Registrar</button>
+                                <button type="button" id="btnCancel" class="btn btn-dark btnNegro" style="display:normal">Cancelar</button>
+                                <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="locationNueva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="modalTitulo">
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-8">
+                            <div class="form-inline">
+                                <input class="form-control" id="campoBuscar" style="margin-right:15px;" />
+                                <button class="btn btn-warning btnNaranjaClaro" type="button" id="btnBusqueda">Buscar</button>
+                            </div>
+                            <br />
+                            @*<div>
+                                <div id="sinResultados"></div>
+                                <table class="table table-bordered" id="tablaResultado"></table>
+                            </div>*@
+                        </div>
+                        <div class="col-lg-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-11">
+                            <div id="sinResultados"></div>
+                            <table class="table table-bordered" id="tablaResultado"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/Scripts/Cliente/CliAlta.js"></script>
+}
+

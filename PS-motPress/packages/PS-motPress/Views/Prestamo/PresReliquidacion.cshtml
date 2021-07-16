@@ -1,0 +1,314 @@
+﻿
+@{
+    ViewBag.Title = "PresReliquidacion";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("/Home/Index");
+    }
+}
+
+<link rel="stylesheet" href="~/Content/posicionGral.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@using (Html.BeginForm())
+{
+    <div class="contenedor">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-9">
+                        <h2><strong>Reliquidación de Préstamos</strong></h2><hr />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-11">
+                <div class="card">
+                    <div class="card-header" style="margin-bottom:0px;">
+                        <h5 style="font-weight:normal">Datos Solicitante</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <h5 style="font-weight:normal">Documento</h5>
+                            </div>
+                            <div class="form-group mx-sm-3 mb-2">
+                                <input type="text" class="form-control" id="docu" placeholder="Sólo números" disabled>
+                                <input id="txtDenominacion" hidden >
+                            </div>
+                            <button type="button" data-toggle="modal" id="btnSubir" data-target="#modalCLiente" class="btn btn-warning btnNaranjaClaro mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </button>
+                        </div><br />
+                    </div>
+                </div>
+                <br /><br />
+                <div class="card" id="tituloTablaPrestamos" style="display: none">
+                    <div class="card-header">
+                        <div>
+                            <p style="font-size: 18px; margin-bottom:0px;">Préstamos pertenecientes al Cliente</p>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered" id="tablaConPrestamos"></table>
+                <div id="SinResultado"></div>
+                <div class="row" style="display: none" id="tablaCuotas">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Cuotas Adeudadas</h6>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" id="tablaCuotasAdeudadas"></table>
+                        <input id="codigoProducto" name="rCodProd" hidden />
+                    </div>
+                </div>
+                <div id="noHayCuotas"></div>
+                <div class="row" id="infoPrestamoViejo" style="display: none">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Información del Préstamo</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        @*<input id="notaA" name="rNota" hidden />
+                                            <input id="entregaA" name="rEntrega" hidden />*@
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1">Monto Adeudado</span>
+                                            <input class="form-control" id="deuda" name="pDeuda" style="text-align:right" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1" style="width:147px;">Fecha  Préstamo</span>
+                                            <input class="form-control" style="padding-right:0px" disabled id="fechaOrigen" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1" style="width:147px;">Importe Préstamo</span>
+                                            <input class="form-control" disabled style="text-align:right" id="importeOrigen" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Nota Adicional</span>
+                                            </div>
+                                            <textarea id="notaA" name="rNota" disabled class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div><br />
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1" style="width:147px;">Seña Inicial</span>
+                                            <input class="form-control" disabled style="text-align:right" id="entregaA" name="rEntrega" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Reliquidación del Préstamos</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <input hidden id="calleCli" />
+                                            <input hidden id="totalCuota" />
+                                            <input hidden id="nroContrato" />
+                                            <input hidden id="idCli" />
+                                            <span class="input-group-text" id="basic-addon1" style="background: #fec04e; color: white">Agregar Capital</span>
+                                            <input class="form-control" value="0" id="masCap" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1">Plan</span>
+                                            <input class="form-control" type="number" id="plan" style="padding-right:0px;" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1">Tasa</span>
+                                            <input class="form-control" type="number" id="tasa" style="padding-right:0px;" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon1">Vencimiento</span>
+                                            <select class="form-control" id="tipoVenc"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1">Primera Cuota</span>
+                                            <input class="form-control" id="primC" type="date" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group" style="margin-bottom: 10px;">
+                                            <span class="input-group-text" id="basic-addon1">Día de Vencimiento</span>
+                                            <input class="form-control" type="number" id="diaV" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3" style="text-align: center">
+                                        <button class="btn btn-warning btnNaranja btnCargaTableSimulacions" type="button" id="btnRecalcular">Recalcular</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="card" style="margin-bottom:0px; display: none;" id="tituloNvoTabla">
+                            <div class="card-header">
+                                <h6>Nuevo Préstamo</h6>
+                            </div>
+                        </div>
+                        <div class="row" style="display: none" id="nuevoPres">
+                            <div class="col-lg-9">
+                                <table id="tablaConPrestamo" class="table table-bordered"></table>
+                            </div>
+                            <div class="col-lg-3" id="infoRefinanciado">
+                                <br />
+                                <div class="card" style="margin-bottom: 10px;">
+                                    <div class="card-body">
+                                        <label>Importe a Refinanciar</label>
+                                        <input disabled class="form-control" id="aRefinan" />
+                                    </div>
+                                </div><br />
+                                <div class="card" style="margin-bottom: 10px;">
+                                    <div class="card-body">
+                                        <label>Interés</label>
+                                        <input disabled class="form-control" id="intNuevo" />
+                                    </div>
+                                </div><br />
+                                <div class="card" style="margin-bottom: 10px;">
+                                    <div class="card-body">
+                                        <label>Importe Refinanciado</label>
+                                        <input disabled class="form-control" id="totNuevo" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" id="datosPrestamo" hidden>
+                        <div class="breadcrumb" style="margin-bottom:0px;">
+                            <h6>Observaciones</h6>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="form-inline">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="input-group col-lg-12">
+                                                <textarea class="form-control" id="observ" maxlength="120" style="resize: vertical; max-height: 150px; max-width:250px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <br />
+                        @*<div class="row">
+                                <div class="col-lg-3"></div>
+                                <div class="col-lg-5">
+                                    <div class="input-group" style="margin-bottom: 10px;">
+                                        <button class="btn btn-dark btnCargaTableSimulacion" id="btnRecalcular">Recalcular</button>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <br />
+                    </div>
+                </div>
+                <div class="row" style="display:none" id="botones">
+                    <div class="col-lg-12" style="text-align: center">
+                        <div class="card">
+                            <div class="card-body">
+                                <button class="btn btn-warning btnNaranja btnConfirmacion" type="button" id="btnConfirmacion">Confirmar Préstamo</button>
+                                <button type="button" id="btnClose" class="btn btn-dark btnNegro">Cancelar</button>
+                                <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+        <div class="modal fade" id="modalCLiente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Búsqueda de Cliente</h3>
+                        <button type="button" onclick="cerrar();" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form runat="server" action="post">
+                            <asp:ScriptManager runat="server">
+                                <Scripts>
+                                    <asp:ScriptReference Name="jquery" />
+                                    <asp:ScriptReference Name="jquery.ui.combined" />
+                                </Scripts>
+                            </asp:ScriptManager>
+                            <div class="row">
+                                <div class="col-lg-5" style="padding-right:0px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="txtEsNombre" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Denominación
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="txtEsDoc" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            Documento
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4" style="padding-left: 0px; display:flex;align-items: center;justify-content: center;">
+                                    @Html.TextBox("parametro", "", htmlAttributes: new { @class = "form-control", @id = "palabra", required = "required" })
+                                </div>
+                                <div class="col-lg-3" style=" display:flex;align-items: center;justify-content: center;">
+                                    <input type="button" value="Buscar" id="btnSubir" class="btn btn-warning btnNaranjaClaro btnSubir" />
+                                    <button class="btn btn-warning btnNaranja" style="display:none;" id="msjCarga3" type="button" disabled><span class="spinner-border spinner-border-sm"></span>Cargando...</button>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        @*<div style="text-align:center">
+                            <button class="btn btn-warning"><a style="text-decoration: none; color: black" href="@Url.Action("CliAlta","Cliente")">Nuevo Cliente</a></button><br />
+                        </div>*@
+
+                        <br /><br />
+                        <div id="posteo">
+                            <table class="table table-bordered table-striped" id="Cargartabla" style="text-align:center"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <script src="~/Scripts/Prestamo/PresReliquidacion.js"></script>
+}
